@@ -3,8 +3,8 @@ Contributors: benjaminniess, momo360modena, pronamic, remcotolsma
 Donate link: http://beapi.fr/donate
 Tags: Issuu, flipbook, PDF, upload, synchronisation, flash, flip, book
 Requires at least: 3.1
-Tested up to: 3.9
-Stable tag: 2.2.6
+Tested up to: 4.1.1
+Stable tag: 2.2.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -31,6 +31,13 @@ Then you'll be abble to insert flipbooks inside your post without having to quit
 = How to get an Issuu API Key ? =
 
 You need to go to http://issuu.com and to create an account. Then go to the http://issuu.com/user/settings?services=true#services page and create a new application
+
+= I can't see my PDF files in the dropdown list =
+
+You may have configured the plugin after having uploaded some PDF. In this, case, you'll have to edit each of them and click to the sync link. We don't have a resync all function yet
+You may have used the media button right now, in this post. Save the post, and you'll see the PDF after refreshing
+You may have not used the official media library. It will not work if you have uploaded PDF's with your FTP software for example
+You may have a communication problem with Issuu, especially if you use a htaccess file to deny the access to your site
 
 = How to use the shortocde ? =
 
@@ -68,6 +75,9 @@ If you want to make some customisation in the Issuu player, you need to copy the
 
 
 == Changelog ==
+
+= 2.2.7 =
+*	Added some help inside the popin when no PDF synced
 
 = 2.2.6 =
 *	Added ES and RS translations thanks to Andrew Kurtis and Borisa Djuraskovic
