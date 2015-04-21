@@ -3,8 +3,8 @@ Contributors: benjaminniess, momo360modena, pronamic, remcotolsma
 Donate link: http://beapi.fr/donate
 Tags: Issuu, flipbook, PDF, upload, synchronisation, flash, flip, book
 Requires at least: 3.1
-Tested up to: 4.1.1
-Stable tag: 2.2.7
+Tested up to: 4.2
+Stable tag: 2.2.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -62,19 +62,25 @@ As mentioned in the installation steps, you first need to copy the crossdomain.x
 
 If you want to make some customisation in the Issuu player, you need to copy the 'issuu-skins' folder into your theme. Then, you'll be able to work on the skins.fla file or on the layout.xml file within your theme.
 
+= How can I add a custom po/mo translation file =
+
+Create your po translation file from the ips.pot and keep the previx (eg. ips-us_US.po)
+Paste the po and mo file into your wp-content/languages/plugins/ folder
 
 == Screenshots ==
 
 1.	The config page
-2.	The Issuu button
-3.	The shortcode
-4.	The Issuu Flipbook in a post
-5.	The media edit view
-6.	The Issuu button
-7.	The shortcode generator
+2.	The shortcode
+3.	The Issuu Flipbook in a post
+4.	The media edit view
+5.	The Issuu button
+6.	The shortcode generator
 
 
 == Changelog ==
+
+= 2.2.8 =
+*   Added the ability to load a mo (translation) file from wp-content/languages/plugins/ folder
 
 = 2.2.7 =
 *	Added some help inside the popin when no PDF synced

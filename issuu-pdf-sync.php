@@ -3,7 +3,7 @@
 Plugin Name: Issuu PDF Sync
 Plugin URI: http://beapi.fr
 Description: Allow to create PDF Flipbooks with the http://issuu.com service.
-Version: 2.2.7
+Version: 2.2.8
 Author: Benjamin Niess
 Author URI: http://beapi.fr
 Text Domain: ips
@@ -24,7 +24,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-define( 'IPS_VERSION', '2.2.7' );
+define( 'IPS_VERSION', '2.2.8' );
 define( 'IPS_URL', plugins_url( '', __FILE__ ) );
 define( 'IPS_DIR', dirname( __FILE__ ) );
 
@@ -43,8 +43,10 @@ function IPS_Init() {
 	global $ips, $ips_options;
 
 	// Load up the localization file if we're using WordPress in a different language
-	// Place it in this plugin's "lang" folder and name it "ips-[value in wp-config].mo"
-	load_plugin_textdomain( 'ips', false, basename( rtrim( dirname( __FILE__ ), '/' ) ) . '/languages' );
+	// Important: If you want to add you own translation file without having to hack this plugin, put you mo file in wp-content/languages/plugins/ips-xx_XX.mo
+	if ( !load_textdomain( 'ips', trailingslashit( WP_LANG_DIR ) . 'plugins/ips-' . get_locale() . '.mo' ) ) {
+		load_plugin_textdomain( 'ips', false, basename( rtrim( dirname( __FILE__ ), '/' ) ) . '/languages' );
+	}
 
 	$ips_options = get_option ( 'ips_options' );
 

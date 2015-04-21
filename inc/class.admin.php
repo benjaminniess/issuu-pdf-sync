@@ -190,15 +190,15 @@ class IPS_Admin {
 							<li><?php _e('Make sure that the "Automatically upload PDFs to Issuu" box is checked or that you\'ve manually send the PDF to the Issuu website.', 'ips'); ?></li>
 							<li>
 								<?php _e('Click to Issuu button on the TinyMCE main bar', 'ips'); ?><br />
-								<img src="<?php echo IPS_URL; ?>/screenshot-6.png" />
+								<img src="<?php echo IPS_URL; ?>/images/screenshot-5.png" width="510" style="padding: 10px;" />
 							</li>
 							<li>
 								<?php _e('Select your PDF file in the dropdown list and add some specific params if you need. Note that you can change the default settings in the settings page', 'ips'); ?><br />
-								<img src="<?php echo IPS_URL; ?>/screenshot-7.png" width="510" style="padding: 10px;" />
+								<img src="<?php echo IPS_URL; ?>/images/screenshot-6.png" width="510" style="padding: 10px;" />
 							</li>
 							<li>
 								<?php _e('Click to the insert button and then the shortcode will be generated. You can easily cut and past this shortcode everywhere in your content', 'ips'); ?><br />
-								<img src="<?php echo IPS_URL; ?>/screenshot-8.png" />
+								<img src="<?php echo IPS_URL; ?>/images/screenshot-2.png" />
 							</li>
 						</ol>
 
