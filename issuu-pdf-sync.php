@@ -3,7 +3,7 @@
 Plugin Name: Issuu PDF Sync
 Plugin URI: http://beapi.fr
 Description: Allow to create PDF Flipbooks with the http://issuu.com service.
-Version: 2.2.8
+Version: 3.0
 Author: Benjamin Niess
 Author URI: http://beapi.fr
 Text Domain: ips
@@ -24,19 +24,20 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
-define( 'IPS_VERSION', '2.2.8' );
+define( 'IPS_VERSION', '3.0' );
 define( 'IPS_URL', plugins_url( '', __FILE__ ) );
 define( 'IPS_DIR', dirname( __FILE__ ) );
 
-require( IPS_DIR . '/inc/functions.plugin.php');
-require( IPS_DIR . '/inc/shortcodes.php');
+require_once( IPS_DIR . '/classes/main.php');
+require_once( IPS_DIR . '/classes/issuu-api.php');
+require_once( IPS_DIR . '/classes/shortcodes.php');
 
 if ( is_admin() ) {
-	require( IPS_DIR . '/inc/class.admin.php');
+	require( IPS_DIR . '/classes/admin/main.php');
 }
 
 // Activate Issuu PDF Sync
-register_activation_hook( __FILE__, 'IPS_Install' );
+register_activation_hook( __FILE__, array( 'IPS_Main', 'install' ) );
 
 // Init Issuu PDF Sync
 function IPS_Init() {
@@ -50,9 +51,12 @@ function IPS_Init() {
 
 	$ips_options = get_option ( 'ips_options' );
 
+    new IPS_Main();
+    new IPS_Shortcodes();
+
 	// Admin
-	if ( class_exists( 'IPS_Admin' ) ) {
-		$ips['admin'] = new IPS_Admin();
+	if ( class_exists( 'IPS_Admin_Main' ) ) {
+		$ips['admin'] = new IPS_Admin_Main();
 	}
 }
 
