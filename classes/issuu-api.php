@@ -13,47 +13,44 @@ class IPS_Issuu_Api {
         return true;
     }
 
+	public function is() {
+		if ( $this->is === true ) {
+			return true;
+		}
 
-    /*
-     * Send a WordPress PDF to Issuu webservice
-     *
-     * @param $post_id the WP post id
-     * @return string the issuu document id | false
-     * @author Benjamin Niess
-     */
-    public function send_pdf_to_issuu( $post_id = 0 ){
+		return false;
+	}
+
+
+
+    public function send_pdf_to_issuu( $attachment_data = array() ){
         global $ips_options;
 
-        if ( (int)$post_id == 0 ) {
-            return false;
-        }
+		if ( !is_array( $attachment_data ) || empty( $attachment_data ) ) {
+			return false;
+		}
 
-        if ( self::has_api_keys() == false ) {
-            return false;
-        }
 
-        // Get attachment infos
-        $post_data = get_post( $post_id );
+		if ( self::has_api_keys() == false ) {
+			return false;
+		}
 
-        // Check if the attachment exists and is a PDF file
-        if ( !isset( $post_data->post_mime_type ) || $post_data->post_mime_type != "application/pdf" || !isset( $post_data->guid ) || empty ( $post_data->guid ) )
-            return false;
 
         $access = 'public';
         if ( isset( $ips_options['access'] ) ) {
             $access = $ips_options['access'];
         }
 
+
         // Parameters
-        $parameters = array(
+        $default_parameters = array(
             'access'   => $access,
             'action'   => 'issuu.document.url_upload',
             'apiKey'   => $ips_options['issuu_api_key'],
             'format'   => 'json',
-            'name'     => $post_data->post_name,
-            'slurpUrl' => $post_data->guid,
-            'title'    => sanitize_title( $post_data->post_title )
         );
+
+		$parameters = array_merge( $attachment_data, $default_parameters );
 
         // Sort request parameters alphabetically (e.g. foo=1, bar=2, baz=3 sorts to bar=2, baz=3, foo=1)
         ksort( $parameters );
@@ -97,11 +94,7 @@ class IPS_Issuu_Api {
         // Update the attachment post meta with the Issuu PDF ID
         $document = $response->rsp->_content->document;
 
-        update_post_meta( $post_id, 'issuu_pdf_id', $document->documentId );
-        update_post_meta( $post_id, 'issuu_pdf_username', $document->username );
-        update_post_meta( $post_id, 'issuu_pdf_name', $document->name );
-
-        return $response->rsp->_content->document->documentId;
+		return $document;
     }
 
     public function get_embed_id ( $document_id = '', $params = array() ) {
@@ -133,22 +126,13 @@ class IPS_Issuu_Api {
      * @return true | false
      * @author Benjamin Niess
      */
-    public function delete_pdf_from_issuu( $post_id = 0 ){
+    public function delete_pdf_from_issuu( $issuu_pdf_name = '' ){
         global $ips_options;
 
-        if ( (int)$post_id == 0 )
-            return false;
+        if ( empty( $issuu_pdf_name ) ) {
+			return false;
+		}
 
-        // Get attachment infos
-        $post_data = get_post( $post_id );
-
-        // Check if the attachment exists and is a PDF file
-        if ( !isset( $post_data->post_mime_type ) || $post_data->post_mime_type != "application/pdf" || !isset( $post_data->guid ) || empty ( $post_data->guid ) )
-            return false;
-
-        $issuu_pdf_name = get_post_meta( $post_id, 'issuu_pdf_name', true );
-        if ( empty( $issuu_pdf_name ) )
-            return false;
 
         // Prepare the MD5 signature for the Issuu Webservice
         $md5_signature = md5( $ips_options['issuu_secret_key'] . "actionissuu.document.deleteapiKey" . $ips_options['issuu_api_key'] . "formatjsonnames" . $issuu_pdf_name );
@@ -166,19 +150,17 @@ class IPS_Issuu_Api {
         // Decode the Json
         $response = json_decode( $response['body'] );
 
-        if ( empty( $response) )
-            return false;
+        if ( empty( $response) ) {
+			return false;
+		}
 
         // Check stat of the action
-        if ( $response->rsp->stat == "fail" )
-            return false;
+        if ( $response->rsp->stat == "fail" ) {
+			return false;
+		}
 
-        // Update the attachment post meta with the Issuu PDF ID
-        delete_post_meta( $post_id, 'issuu_pdf_id' );
-        delete_post_meta( $post_id, 'issuu_pdf_name' );
-        update_post_meta( $post_id, 'disable_auto_upload', 1 );
+		return true;
 
-        return true;
     }
 
     private function call_issuu_api ( $custom_parameters = array() ) {

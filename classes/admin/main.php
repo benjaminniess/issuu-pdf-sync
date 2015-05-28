@@ -105,8 +105,7 @@ class IPS_Admin_Main {
 
 		// Upload the PDF to Issuu if necessary and if the Auto upload feature is enabled
 		if ( empty( $issuu_pdf_id ) && isset( $ips_options['auto_upload'] ) && $ips_options['auto_upload'] == 1 && $disable_auto_upload != 1) {
-            $issuu_api = new IPS_Issuu_Api();
-            $issuu_pdf_id = $issuu_api->send_pdf_to_issuu($attachment->ID);
+			$issuu_pdf_id = IPS_Main::sync_pdf( $attachment->ID );
         }
 
 		if ( version_compare( $wp_version, '3.5', '<' ) ) {
@@ -207,13 +206,14 @@ class IPS_Admin_Main {
 			//check if the nonce is correct
 			check_admin_referer( 'issuu_send_' . $_GET['attachment_id'] );
 
-			die($issuu_api->send_pdf_to_issuu( $_GET['attachment_id'] ) );
+
+			die(IPS_Main::sync_pdf( (int) $_GET['attachment_id'] ) );
 		} elseif ( $_GET['action'] == 'delete_pdf' ){
 
 			//check if the nonce is correct
 			check_admin_referer( 'issuu_delete_' . $_GET['attachment_id'] );
 
-			die($issuu_api->delete_pdf_from_issuu( (int) $_GET['attachment_id'] ) );
+			die(IPS_Main::unsync_pdf( (int) $_GET['attachment_id'] ) );
 		}
 	}
 
