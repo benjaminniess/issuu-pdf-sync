@@ -3,12 +3,25 @@
 class IPS_Issuu_Api {
 
     private $is = false;
+	private $issuu_api_key = false;
+	private $issuu_secret_key = false;
+	private $access = false;
 
     function __construct() {
         $this->setInstance();
     }
 
     public function setInstance() {
+		global $ips_options;
+
+		if ( !isset( $ips_options['issuu_api_key'] ) || empty( $ips_options['issuu_api_key'] ) || !isset( $ips_options['issuu_secret_key'] ) || empty( $ips_options['issuu_secret_key'] ) ) {
+			return false;
+		}
+
+		$this->$issuu_api_key = $ips_options['issuu_api_key'];
+		$this->$issuu_secret_key = $ips_options['issuu_secret_key'];
+		$this->access = isset( $ips_options['access'] ) ? $ips_options['access'] : 'public';
+
         $this->is = true;
         return true;
     }
@@ -24,29 +37,19 @@ class IPS_Issuu_Api {
 
 
     public function send_pdf_to_issuu( $attachment_data = array() ){
-        global $ips_options;
-
+		if ( !$this->is() ) {
+			return false;
+		}
+		
 		if ( !is_array( $attachment_data ) || empty( $attachment_data ) ) {
 			return false;
 		}
 
-
-		if ( self::has_api_keys() == false ) {
-			return false;
-		}
-
-
-        $access = 'public';
-        if ( isset( $ips_options['access'] ) ) {
-            $access = $ips_options['access'];
-        }
-
-
         // Parameters
         $default_parameters = array(
-            'access'   => $access,
+            'access'   => $this->access,
             'action'   => 'issuu.document.url_upload',
-            'apiKey'   => $ips_options['issuu_api_key'],
+            'apiKey'   => $this->$issuu_api_key,
             'format'   => 'json',
         );
 
@@ -56,7 +59,7 @@ class IPS_Issuu_Api {
         ksort( $parameters );
 
         // Prepare the MD5 signature for the Issuu Webservice
-        $string = $ips_options['issuu_secret_key'];
+        $string = $this->issuu_secret_key;
 
         foreach ( $parameters as $key => $value ) {
             $string .= $key . $value;
@@ -98,6 +101,14 @@ class IPS_Issuu_Api {
     }
 
     public function get_embed_id ( $document_id = '', $params = array() ) {
+		if ( !$this->is() ) {
+			return false;
+		}
+
+		if ( (int) $document_id <= 0 ) {
+			return false;
+		}
+
         $default_params = array(
             'action'   => 'issuu.document_embed.add',
             'documentId' => $document_id,
@@ -135,10 +146,10 @@ class IPS_Issuu_Api {
 
 
         // Prepare the MD5 signature for the Issuu Webservice
-        $md5_signature = md5( $ips_options['issuu_secret_key'] . "actionissuu.document.deleteapiKey" . $ips_options['issuu_api_key'] . "formatjsonnames" . $issuu_pdf_name );
+        $md5_signature = md5( $this->issuu_secret_key . "actionissuu.document.deleteapiKey" . $this->$issuu_api_key . "formatjsonnames" . $issuu_pdf_name );
 
         // Call the Webservice
-        $url_to_call = "http://api.issuu.com/1_0?action=issuu.document.delete&apiKey=" . $ips_options['issuu_api_key'] . "&format=json&names=" . $issuu_pdf_name . "&signature=" . $md5_signature;
+        $url_to_call = "http://api.issuu.com/1_0?action=issuu.document.delete&apiKey=" . $this->$issuu_api_key . "&format=json&names=" . $issuu_pdf_name . "&signature=" . $md5_signature;
 
         // Cath the response
         $response = wp_remote_get( $url_to_call, array( 'timeout' => 25 ) );
@@ -164,12 +175,6 @@ class IPS_Issuu_Api {
     }
 
     private function call_issuu_api ( $custom_parameters = array() ) {
-        global $ips_options;
-
-        if (self::has_api_keys() == false ) {
-            return false;
-        }
-
         $access = 'public';
         if ( isset( $ips_options['access'] ) ) {
             $access = $ips_options['access'];
@@ -178,7 +183,7 @@ class IPS_Issuu_Api {
         // Parameters
         $default_parameters = array(
             'access'   => $access,
-            'apiKey'   => $ips_options['issuu_api_key'],
+            'apiKey'   => $this->$issuu_api_key,
             'format'   => 'json',
         );
 
@@ -188,7 +193,7 @@ class IPS_Issuu_Api {
         ksort( $parameters );
 
         // Prepare the MD5 signature for the Issuu Webservice
-        $string = $ips_options['issuu_secret_key'];
+        $string = $this->$issuu_secret_key;
 
         foreach ( $parameters as $key => $value ) {
             $string .= $key . $value;
@@ -223,19 +228,5 @@ class IPS_Issuu_Api {
         }
 
         return $response->rsp->_content;
-    }
-
-    /*
-     * Check if the Issuu API Key and Secret Key are entered
-     * @return true | false
-     * @author Benjamin Niess
-     */
-    function has_api_keys(){
-        global $ips_options;
-
-        if ( !isset( $ips_options['issuu_api_key'] ) || empty( $ips_options['issuu_api_key'] ) || !isset( $ips_options['issuu_secret_key'] ) || empty( $ips_options['issuu_secret_key'] ) )
-            return false;
-
-        return true;
     }
 }

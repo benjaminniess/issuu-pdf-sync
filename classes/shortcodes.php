@@ -48,6 +48,9 @@ class IPS_Shortcodes {
 
 
         $issuu_api = new IPS_Issuu_Api();
+		if ( !$issuu_api->is() ) {
+			return false;
+		}
         $pdf_embed_data = $issuu_api->get_embed_id( $issuu_pdf_id, array( 'width' => $width, 'height' => $height ) );
         if ( empty( $pdf_embed_data ) ) {
             return false;

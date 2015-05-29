@@ -224,15 +224,17 @@ class IPS_Admin_Main {
     public static function edit_media_js(){
 		global $ips_options;
 
-		if ( !isset( $_GET['attachment_id'] ) || (int)$_GET['attachment_id'] <= 0 || !isset( $ips_options['issuu_api_key'] ) || empty( $ips_options['issuu_api_key'] ) || !isset( $ips_options['issuu_secret_key'] ) || empty( $ips_options['issuu_secret_key'] ) )
+		if ( !isset( $_GET['attachment_id'] ) || (int)$_GET['attachment_id'] <= 0 || !isset( $ips_options['issuu_api_key'] ) || empty( $ips_options['issuu_api_key'] ) || !isset( $ips_options['issuu_secret_key'] ) || empty( $ips_options['issuu_secret_key'] ) ) {
 			return false;
+		}
 
 		// Get attachment infos
 		$post_data = get_post( $_GET['attachment_id'] );
 
 		// Check if the attachment exists and is a PDF file
-		if ( !isset( $post_data->post_mime_type ) || $post_data->post_mime_type != "application/pdf" || !isset( $post_data->guid ) || empty ( $post_data->guid ) )
+		if ( !isset( $post_data->post_mime_type ) || $post_data->post_mime_type != "application/pdf" || !isset( $post_data->guid ) || empty ( $post_data->guid ) ) {
 			return false;
+		}
 
 		// Check on post meta if the PDF has already been uploaded on Issuu
 		$issuu_pdf_id = get_post_meta( $_GET['attachment_id'], 'issuu_pdf_id', true );

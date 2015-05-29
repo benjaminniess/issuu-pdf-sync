@@ -39,17 +39,18 @@ class IPS_Main {
 			return false;
 		}
 
+
+		$issuu = new IPS_Issuu_Api();
+		if ( !$issuu->is() ) {
+			return false;
+		}
+
 		// Parameters
 		$parameters = array(
 			'name'     => $attachment->post_name,
 			'slurpUrl' => $attachment->guid,
 			'title'    => sanitize_title( $attachment->post_title )
 		);
-
-		$issuu = new IPS_Issuu_Api();
-		if ( !$issuu->is() ) {
-			return false;
-		}
 
 		$send_to_issuu = $issuu->send_pdf_to_issuu( $parameters );
 		if ( empty( $send_to_issuu ) || !is_object( $send_to_issuu ) ) {
