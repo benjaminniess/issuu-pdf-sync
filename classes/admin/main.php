@@ -8,9 +8,9 @@ class IPS_Admin_Main {
 		add_filter( 'attachment_fields_to_edit', array( __CLASS__, 'insert_ips_button' ), 10, 2 );
 		add_filter( 'media_send_to_editor', array( __CLASS__, 'send_to_editor' ) );
 
-		if ( $pagenow == 'media.php' ) {
-            add_action('admin_head', array( __CLASS__, 'edit_media_js'), 50);
-        }
+		if ( 'media.php' == $pagenow ) {
+			add_action( 'admin_head', array( __CLASS__, 'edit_media_js' ), 50 );
+		}
 
 		add_action( 'admin_init', array( __CLASS__, 'check_js_pdf_edition' ) );
 		add_action( 'admin_menu', array( __CLASS__, 'add_plugin_menu' ) );
@@ -28,7 +28,7 @@ class IPS_Admin_Main {
 	}
 
 	public static function add_plugin_menu() {
-		add_options_page( __('Options for Issuu PDF Sync', 'ips'), __('Issuu PDF Sync', 'ips'), 'manage_options', 'ips-options', array( __CLASS__, 'display_options' ) );
+		add_options_page( __( 'Options for Issuu PDF Sync', 'ips' ), __( 'Issuu PDF Sync', 'ips' ), 'manage_options', 'ips-options', array( __CLASS__, 'display_options' ) );
 	}
 
 	/**
@@ -37,35 +37,35 @@ class IPS_Admin_Main {
 	 * @echo the form
 	 * @author Benjamin Niess
 	 */
-    public static function display_options() {
+	public static function display_options() {
 		global $ips_options;
 		if ( isset($_POST['save']) ) {
 			check_admin_referer( 'ips-update-options' );
 			$new_options = array();
 
 			// Update existing
-			foreach( (array) $_POST['ips'] as $key => $value ) {
-				$new_options[$key] = stripslashes($value);
+			foreach ( (array) $_POST['ips'] as $key => $value ) {
+				$new_options[ $key ] = stripslashes( $value );
 			}
 
 			update_option( 'ips_options', $new_options );
-			$ips_options = get_option ( 'ips_options' );
+			$ips_options = get_option( 'ips_options' );
 		}
 
-		if (isset($_POST['save']) ) {
-			echo '<div class="message updated"><p>'.__('Options updated!', 'ips').'</p></div>';
+		if ( isset($_POST['save']) ) {
+			echo '<div class="message updated"><p>'.__( 'Options updated!', 'ips' ).'</p></div>';
 		}
 
-		if ( $ips_options == false ) {
+		if ( false == $ips_options  ) {
 			$ips_options = array();
 		}
 
-        $tpl = IPS_Main::load_template( 'admin-options' );
-        if ( empty( $tpl ) ) {
-            return false;
-        }
+		$tpl = IPS_Main::load_template( 'admin-options' );
+		if ( empty( $tpl ) ) {
+			return false;
+		}
 
-        include( $tpl );
+		include( $tpl );
 	}
 
 
@@ -78,22 +78,22 @@ class IPS_Admin_Main {
 	 * @param $form_fields Object
 	 * @param $post Object
 	 */
-    public static function insert_ips_button( $form_fields, $attachment ) {
+	public static function insert_ips_button( $form_fields, $attachment ) {
 		global $wp_version, $ips_options;
 
 		if ( version_compare( $wp_version, '3.5', '<' ) ) {
-			if ( !isset( $form_fields ) || empty( $form_fields ) || !isset( $attachment ) || empty( $attachment ) )
-				return $form_fields;
+			if ( ! isset( $form_fields ) || empty( $form_fields ) || ! isset( $attachment ) || empty( $attachment ) ) {
+				return $form_fields; }
 		}
 
 		// Only add the extra button if the attachment is a PDF file
-		if ( $attachment->post_mime_type != 'application/pdf' )
-			return $form_fields;
+		if ( $attachment->post_mime_type != 'application/pdf' ) {
+			return $form_fields; }
 
 		// Allow plugin to stop the auto-insertion
 		$check = apply_filters( 'insert-ips-button', true, $attachment, $form_fields );
-		if ( $check !== true )
-			return $form_fields;
+		if ( true != $check  ) {
+			return $form_fields; }
 
 		// Check on post meta if the PDF has already been uploaded on Issuu
 		$issuu_pdf_id = get_post_meta( $attachment->ID, 'issuu_pdf_id', true );
@@ -104,44 +104,44 @@ class IPS_Admin_Main {
 		$issuu_url = sprintf( 'http://issuu.com/%s/docs/%s', $issuu_pdf_username, $issuu_pdf_name );
 
 		// Upload the PDF to Issuu if necessary and if the Auto upload feature is enabled
-		if ( empty( $issuu_pdf_id ) && isset( $ips_options['auto_upload'] ) && $ips_options['auto_upload'] == 1 && $disable_auto_upload != 1) {
+		if ( empty( $issuu_pdf_id ) && isset( $ips_options['auto_upload'] ) && 1 == $ips_options['auto_upload'] && 1 != $disable_auto_upload ) {
 			$issuu_pdf_id = IPS_Main::sync_pdf( $attachment->ID );
-        }
+		}
 
 		if ( version_compare( $wp_version, '3.5', '<' ) ) {
-			if ( empty( $issuu_pdf_id ) )
-				return $form_fields;
+			if ( empty( $issuu_pdf_id ) ) {
+				return $form_fields; }
 
-			$form_fields["url"]["html"] .= "<button type=\"button\" class='button urlissuupdfsync issuu-pdf-" . $issuu_pdf_id . "' data-link-url=\"[pdf issuu_pdf_id=" . $issuu_pdf_id . "]\" title='[pdf issuu_pdf_id=\"" . $issuu_pdf_id . "\"]'>" . _( 'Issuu PDF' ) . "</button>";
+			$form_fields['url']['html'] .= "<button type=\"button\" class='button urlissuupdfsync issuu-pdf-" . $issuu_pdf_id . "' data-link-url=\"[pdf issuu_pdf_id=" . $issuu_pdf_id . "]\" title='[pdf issuu_pdf_id=\"" . $issuu_pdf_id . "\"]'>" . _( 'Issuu PDF' ) . '</button>';
 		} else {
 			$form_fields['issuu_pdf_sync_id'] = array(
 				'show_in_edit' => true,
 				'label'        => __( 'Issuu Document ID', 'isp' ),
-				'value'        => $issuu_pdf_id
+				'value'        => $issuu_pdf_id,
 			);
 
 			$form_fields['issuu_pdf_username'] = array(
 				'show_in_edit' => true,
 				'label'        => __( 'Issuu Document Username', 'isp' ),
-				'value'        => $issuu_pdf_username
+				'value'        => $issuu_pdf_username,
 			);
 
 			$form_fields['issuu_pdf_name'] = array(
 				'show_in_edit' => true,
 				'label'        => __( 'Issuu Document Name', 'isp' ),
-				'value'        => $issuu_pdf_name
+				'value'        => $issuu_pdf_name,
 			);
 
 			$form_fields['issuu_pdf_url'] = array(
 				'show_in_edit' => true,
 				'label'        => __( 'Issuu Document URL', 'isp' ),
-				'value'        => $issuu_url
+				'value'        => $issuu_url,
 			);
 
 			$form_fields['issuu_pdf_sync_auto_upload'] = array(
 				'show_in_edit' => true,
 				'label'        => __( 'Issuu Auto Upload', 'isp' ),
-				'value'        => $disable_auto_upload
+				'value'        => $disable_auto_upload,
 			);
 
 			$form_fields['issuu_pdf_sync'] = array(
@@ -156,13 +156,13 @@ class IPS_Admin_Main {
 		return $form_fields;
 	}
 
-    public static function get_sync_input( $attachment_id, $issuu_document_id ) {
-        $tpl = IPS_Main::load_template( 'admin-sync-input' );
-        if ( empty( $tpl ) ) {
-            return false;
-        }
+	public static function get_sync_input( $attachment_id, $issuu_document_id ) {
+		$tpl = IPS_Main::load_template( 'admin-sync-input' );
+		if ( empty( $tpl ) ) {
+			return false;
+		}
 
-        $input = '';
+		$input = '';
 
 		ob_start();
 
@@ -182,8 +182,8 @@ class IPS_Admin_Main {
 	 * @return String The pdf url
 	 * @author Benjamin Niess
 	 */
-    public static function send_to_editor( $html ) {
-		if( preg_match( '|\[pdf (.*?)\]|i', $html, $matches ) ) {
+	public static function send_to_editor( $html ) {
+		if ( preg_match( '|\[pdf (.*?)\]|i', $html, $matches ) ) {
 			if ( isset($matches[0]) ) {
 				$html = $matches[0];
 			}
@@ -192,39 +192,38 @@ class IPS_Admin_Main {
 	}
 
 	/*
-	 * Check if an action is set on the $_GET var and call the PHP function corresponding
-	 * @return true | false
-	 * @author Benjamin Niess
+     * Check if an action is set on the $_GET var and call the PHP function corresponding
+     * @return true | false
+     * @author Benjamin Niess
 	 */
-    public static function check_js_pdf_edition(){
-		if ( !isset( $_GET['attachment_id'] ) || (int)$_GET['attachment_id'] == 0 || !isset( $_GET['action'] ) || empty( $_GET['action'] ) )
-			return false;
+	public static function check_js_pdf_edition(){
+		if ( ! isset( $_GET['attachment_id'] ) || 0 == (int) $_GET['attachment_id'] || ! isset( $_GET['action'] ) || empty( $_GET['action'] ) ) {
+			return false; }
 
-        $issuu_api = new IPS_Issuu_Api();
+		$issuu_api = new IPS_Issuu_Api();
 
-		if ( $_GET['action'] == 'send_pdf' ){
+		if ( 'send_pdf' == $_GET['action'] ) {
 			//check if the nonce is correct
 			check_admin_referer( 'issuu_send_' . $_GET['attachment_id'] );
 
-
 			die(IPS_Main::sync_pdf( (int) $_GET['attachment_id'] ) );
-		} elseif ( $_GET['action'] == 'delete_pdf' ){
+		} elseif ( 'delete_pdf' == $_GET['action'] ) {
 
 			//check if the nonce is correct
 			check_admin_referer( 'issuu_delete_' . $_GET['attachment_id'] );
 
-			die(IPS_Main::unsync_pdf( (int) $_GET['attachment_id'] ) );
+			die( IPS_Main::unsync_pdf( (int) $_GET['attachment_id'] ) );
 		}
 	}
 
 	/*
-	 * Print some JS code for the media.php page (for PDFs only)
-	 * @author Benjamin Niess
+     * Print some JS code for the media.php page (for PDFs only)
+     * @author Benjamin Niess
 	 */
-    public static function edit_media_js(){
+	public static function edit_media_js(){
 		global $ips_options;
 
-		if ( !isset( $_GET['attachment_id'] ) || (int)$_GET['attachment_id'] <= 0 || !isset( $ips_options['issuu_api_key'] ) || empty( $ips_options['issuu_api_key'] ) || !isset( $ips_options['issuu_secret_key'] ) || empty( $ips_options['issuu_secret_key'] ) ) {
+		if ( ! isset( $_GET['attachment_id'] ) || (int) $_GET['attachment_id'] <= 0 || ! isset( $ips_options['issuu_api_key'] ) || empty( $ips_options['issuu_api_key'] ) || ! isset( $ips_options['issuu_secret_key'] ) || empty( $ips_options['issuu_secret_key'] ) ) {
 			return false;
 		}
 
@@ -232,7 +231,7 @@ class IPS_Admin_Main {
 		$post_data = get_post( $_GET['attachment_id'] );
 
 		// Check if the attachment exists and is a PDF file
-		if ( !isset( $post_data->post_mime_type ) || $post_data->post_mime_type != "application/pdf" || !isset( $post_data->guid ) || empty ( $post_data->guid ) ) {
+		if ( ! isset( $post_data->post_mime_type ) || $post_data->post_mime_type != 'application/pdf' || ! isset( $post_data->guid ) || empty ( $post_data->guid ) ) {
 			return false;
 		}
 
@@ -240,19 +239,19 @@ class IPS_Admin_Main {
 		$issuu_pdf_id = get_post_meta( $_GET['attachment_id'], 'issuu_pdf_id', true );
 
 		$tpl = IPS_Main::load_template( 'admin-media-javascript' );
-        if ( empty( $tpl ) ) {
-            return false;
-        }
+		if ( empty( $tpl ) ) {
+			return false;
+		}
 
-        include ( $tpl );
+		include ( $tpl );
 	}
 
 	/*
-	 * The content of the javascript popin for the PDF insertion
-	 *
-	 * @author Benjamin Niess
+     * The content of the javascript popin for the PDF insertion
+     *
+     * @author Benjamin Niess
 	 */
-    public static function wp_ajax_fct(){
+	public static function wp_ajax_fct(){
 		global $ips_options, $wp_styles;
 
 		$pdf_files = new WP_Query( array(
@@ -263,72 +262,73 @@ class IPS_Admin_Main {
 				array(
 					'key'     => 'issuu_pdf_id',
 					'value'   => '',
-					'compare' => '!='
-				)
+					'compare' => '!=',
+				),
 			)
 		) );
 
-		if ( !empty($wp_styles->concat) ) {
+		if ( ! empty($wp_styles->concat) ) {
 			$dir = $wp_styles->text_direction;
-			$ver = md5("$wp_styles->concat_version{$dir}");
+			$ver = md5( "$wp_styles->concat_version{$dir}" );
 
 			// Make the href for the style of box
 			$href = $wp_styles->base_url . "/wp-admin/load-styles.php?c={$zip}&dir={$dir}&load=media&ver=$ver";
 			echo "<link rel='stylesheet' href='" . esc_attr( $href ) . "' type='text/css' media='all' />\n";
 		}
 
-        if ( !$pdf_files->have_posts() ) {
-            $tpl = IPS_Main::load_template( 'admin-no-pdf-yet' );
-        } else {
-            $tpl = IPS_Main::load_template( 'admin-insert-modal' );
-        }
+		if ( ! $pdf_files->have_posts() ) {
+			$tpl = IPS_Main::load_template( 'admin-no-pdf-yet' );
+		} else {
+			$tpl = IPS_Main::load_template( 'admin-insert-modal' );
+		}
 
-        if ( empty( $tpl ) ) {
-            return false;
-        }
+		if ( empty( $tpl ) ) {
+			return false;
+		}
 
-        include ( $tpl );
+		include ( $tpl );
 		exit();
 	}
 
 	/*
-	 * Add buttons to the tiymce bar
-	 *
-	 * @author Benjamin Niess
+     * Add buttons to the tiymce bar
+     *
+     * @author Benjamin Niess
 	 */
-    public static function add_buttons() {
+	public static function add_buttons() {
 		global $ips_options;
 
 		// Don't bother doing this stuff if the current user lacks permissions
-		if ( ! current_user_can('edit_posts') && ! current_user_can('edit_pages') )
-			return false;
+		if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'edit_pages' ) ) {
+			return false; }
 
 		// Does the admin want to display the Issuu button ?
-		if ( !isset( $ips_options['add_ips_button'] ) || (int)$ips_options['add_ips_button'] != 1 )
+		if ( ! isset( $ips_options['add_ips_button'] ) || 1 != (int) $ips_options['add_ips_button'] ) {
 			return false;
+		}
 
-		if ( get_user_option('rich_editing') == 'true') {
-			add_filter('mce_external_plugins', array ( __CLASS__,'add_script_tinymce' ) );
-			add_filter('mce_buttons', array ( __CLASS__,'register_the_button' ) );
+		if ( get_user_option( 'rich_editing' ) == 'true' ) {
+			add_filter( 'mce_external_plugins', array( __CLASS__, 'add_script_tinymce' ) );
+			add_filter( 'mce_buttons', array( __CLASS__, 'register_the_button' ) );
 		}
 	}
 
 	/*
-	 * Add buttons to the tiymce bar
-	 *
-	 * @author Benjamin Niess
+     * Add buttons to the tiymce bar
+     *
+     * @author Benjamin Niess
 	 */
-    public static function register_the_button($buttons) {
-		array_push($buttons, "|", "ips");
+	public static function register_the_button($buttons) {
+		array_push( $buttons, '|', 'ips' );
 		return $buttons;
 	}
 
 	/*
-	 * Load the custom js for the tinymce button
-	 *
-	 * @author Benjamin Niess
+     * Load the custom js for the tinymce button
+     *
+     * @author Benjamin Niess
 	 */
-    public static function add_script_tinymce($plugin_array) {
+	public static function add_script_tinymce($plugin_array) {
 		$plugin_array['ips'] = IPS_URL . '/js/tinymce.js';
 		return $plugin_array;
 	}
