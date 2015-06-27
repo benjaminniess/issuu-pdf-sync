@@ -39,7 +39,6 @@ class IPS_Main {
 			return false;
 		}
 
-
 		$issuu = new IPS_Issuu_Api();
 		if ( ! $issuu->is() ) {
 			return false;
@@ -65,7 +64,7 @@ class IPS_Main {
 	}
 
 	public static function unsync_pdf( $attachment_id = 0 ){
-		if ( 0 >=  (int) $attachment_id ) {
+		if ( 0 >= (int) $attachment_id ) {
 			return false;
 		}
 
