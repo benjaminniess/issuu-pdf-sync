@@ -24,7 +24,13 @@ class IPS_Admin_Main {
 	}
 
 	public static function init() {
+		global $pagenow;
+
 		wp_enqueue_script( 'jquery' );
+
+		if ( 'options-general.php' == $pagenow ) {
+			wp_enqueue_script( 'ips-admin-main', IPS_URL . '/js/admin-main.js', array( 'jquery' ), '1.0', true );
+		}
 	}
 
 	public static function add_plugin_menu() {
@@ -88,12 +94,14 @@ class IPS_Admin_Main {
 
 		// Only add the extra button if the attachment is a PDF file
 		if ( $attachment->post_mime_type != 'application/pdf' ) {
-			return $form_fields; }
+			return $form_fields;
+		}
 
 		// Allow plugin to stop the auto-insertion
 		$check = apply_filters( 'insert-ips-button', true, $attachment, $form_fields );
 		if ( true != $check  ) {
-			return $form_fields; }
+			return $form_fields;
+		}
 
 		// Check on post meta if the PDF has already been uploaded on Issuu
 		$issuu_pdf_id = get_post_meta( $attachment->ID, 'issuu_pdf_id', true );
@@ -110,7 +118,8 @@ class IPS_Admin_Main {
 
 		if ( version_compare( $wp_version, '3.5', '<' ) ) {
 			if ( empty( $issuu_pdf_id ) ) {
-				return $form_fields; }
+				return $form_fields;
+			}
 
 			$form_fields['url']['html'] .= "<button type=\"button\" class='button urlissuupdfsync issuu-pdf-" . $issuu_pdf_id . "' data-link-url=\"[pdf issuu_pdf_id=" . $issuu_pdf_id . "]\" title='[pdf issuu_pdf_id=\"" . $issuu_pdf_id . "\"]'>" . _( 'Issuu PDF' ) . '</button>';
 		} else {
@@ -198,21 +207,24 @@ class IPS_Admin_Main {
 	 */
 	public static function check_js_pdf_edition(){
 		if ( ! isset( $_GET['attachment_id'] ) || 0 == (int) $_GET['attachment_id'] || ! isset( $_GET['action'] ) || empty( $_GET['action'] ) ) {
-			return false; }
-
-		$issuu_api = new IPS_Issuu_Api();
+			return false;
+		}
 
 		if ( 'send_pdf' == $_GET['action'] ) {
 			//check if the nonce is correct
 			check_admin_referer( 'issuu_send_' . $_GET['attachment_id'] );
 
-			die(IPS_Main::sync_pdf( (int) $_GET['attachment_id'] ) );
+			$sync = IPS_Main::sync_pdf( (int) $_GET['attachment_id'] );
+			echo ( true == $sync ) ? 'true' : 'false';
+			die();
 		} elseif ( 'delete_pdf' == $_GET['action'] ) {
 
 			//check if the nonce is correct
 			check_admin_referer( 'issuu_delete_' . $_GET['attachment_id'] );
 
-			die( IPS_Main::unsync_pdf( (int) $_GET['attachment_id'] ) );
+			$sync = IPS_Main::unsync_pdf( (int) $_GET['attachment_id'] );
+			echo ( true == $sync ) ? 'true' : 'false';
+			die();
 		}
 	}
 
@@ -286,6 +298,8 @@ class IPS_Admin_Main {
 			return false;
 		}
 
+		$api_version = isset( $ips_options['api_version'] ) && $ips_options['api_version'] == 'new' ? 'new' : 'old';
+
 		include ( $tpl );
 		exit();
 	}
@@ -315,7 +329,7 @@ class IPS_Admin_Main {
 
 	/*
      * Add buttons to the tiymce bar
-     *
+     *ter
      * @author Benjamin Niess
 	 */
 	public static function register_the_button($buttons) {

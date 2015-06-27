@@ -17,13 +17,6 @@
 
 					</td>
 				</tr>
-				<tr valign="top" class="field">
-					<th class="label" scope="row"><label for="ips_layout"><span class="alignleft"><?php _e( 'Layout', 'ips' ); ?></span></label></th>
-					<td>
-						<p style="height:25px;"><input id="ips_layout" type="radio" name="ips_layout" value="1" <?php checked( isset( $ips_options['layout'] ) ? $ips_options['layout'] : 0 , 1 ); ?> /> <?php _e( 'Two up', 'ips' ); ?><img src="<?php echo IPS_URL . '/images/layout-double-pages.png' ; ?>" height="16" style="margin-left:5px;" /></p>
-						<p><input type="radio" name="ips_layout" value="2" <?php checked( isset( $ips_options['layout'] ) ? $ips_options['layout'] : 0 , 2 ); ?> /> <?php _e( 'Single page', 'ips' ); ?><img src="<?php echo IPS_URL . '/images/layout-single-page.png' ; ?>" height="16" style="margin-left:5px;" /></p>
-					</td>
-				</tr>
 
 				<tr valign="top" class="field">
 					<th class="label" scope="row"><label for="ips_width"><span class="alignleft"><?php _e( 'Width', 'ips' ); ?></span></label></th>
@@ -35,34 +28,45 @@
 					<td><input id="ips_height" type="number" min="0" max="2000" name="ips_height" value="<?php echo isset(  $ips_options['height'] ) ? (int) $ips_options['height'] : ''; ?>" /> px</td>
 				</tr>
 
-				<tr valign="top" class="field">
-					<th class="label" scope="row"><label for="ips_bgcolor"><span class="alignleft"><?php _e( 'Background color', 'ips' ); ?></span></label></th>
-					<td># <input id="ips_bgcolor" style="width:65px;" type="text" maxlength="6" name="ips_bgcolor" value="<?php echo isset(  $ips_options['bgcolor'] ) ? $ips_options['bgcolor'] : ''; ?>" /></td>
-				</tr>
+				<?php if ( $api_version == 'old' ) : ?>
+					<tr valign="top" class="field">
+						<th class="label" scope="row"><label for="ips_layout"><span class="alignleft"><?php _e( 'Layout', 'ips' ); ?></span></label></th>
+						<td>
+							<p style="height:25px;"><input id="ips_layout" type="radio" name="ips_layout" value="1" <?php checked( isset( $ips_options['layout'] ) ? $ips_options['layout'] : 0 , 1 ); ?> /> <?php _e( 'Two up', 'ips' ); ?><img src="<?php echo IPS_URL . '/images/layout-double-pages.png' ; ?>" height="16" style="margin-left:5px;" /></p>
+							<p><input type="radio" name="ips_layout" value="2" <?php checked( isset( $ips_options['layout'] ) ? $ips_options['layout'] : 0 , 2 ); ?> /> <?php _e( 'Single page', 'ips' ); ?><img src="<?php echo IPS_URL . '/images/layout-single-page.png' ; ?>" height="16" style="margin-left:5px;" /></p>
+						</td>
+					</tr>
 
-				<tr valign="top" class="field">
-					<th class="label" scope="row"><label for="ips_allow_full_screen"><span class="alignleft"><?php _e( 'Allow full screen', 'ips' ); ?></span></label></th>
-					<td><input id="ips_allow_full_screen" name="ips_allow_full_screen_"  type="checkbox" <?php checked( isset( $ips_options['allow_full_screen'] ) ? $ips_options['allow_full_screen'] : '' , 1 ); ?> value="1" /></td>
-				</tr>
+					<tr valign="top" class="field">
+						<th class="label" scope="row"><label for="ips_bgcolor"><span class="alignleft"><?php _e( 'Background color', 'ips' ); ?></span></label></th>
+						<td># <input id="ips_bgcolor" style="width:65px;" type="text" maxlength="6" name="ips_bgcolor" value="<?php echo isset(  $ips_options['bgcolor'] ) ? $ips_options['bgcolor'] : ''; ?>" /></td>
+					</tr>
 
-				<tr valign="top" class="field">
-					<th class="label" scope="row"><label for="ips_show_flip_buttons"><span class="alignleft"><?php _e( 'Always show flip buttons', 'ips' ); ?></span></label></th>
-					<td><input id="ips_show_flip_buttons" name="ips_show_flip_buttons" type="checkbox" <?php checked( isset( $ips_options['show_flip_buttons'] ) ? $ips_options['show_flip_buttons'] : '' , 1 ); ?> value="1" /></td>
-				</tr>
+					<tr valign="top" class="field">
+						<th class="label" scope="row"><label for="ips_allow_full_screen"><span class="alignleft"><?php _e( 'Allow full screen', 'ips' ); ?></span></label></th>
+						<td><input id="ips_allow_full_screen" name="ips_allow_full_screen_"  type="checkbox" <?php checked( isset( $ips_options['allow_full_screen'] ) ? $ips_options['allow_full_screen'] : '' , 1 ); ?> value="1" /></td>
+					</tr>
 
-				<tr valign="top" class="field">
-					<th class="label" scope="row"><label for="ips_autoflip"><span class="alignleft"><?php _e( 'Auto flip', 'ips' ); ?></span></label></th>
-					<td>
-						<input type="checkbox" id="ips_autoflip" name="ips_autoflip" value="1" <?php checked( isset( $ips_options['autoflip'] ) ? $ips_options['autoflip'] : 0 , 1 ); ?> />
-					</td>
-				</tr>
+					<tr valign="top" class="field">
+						<th class="label" scope="row"><label for="ips_show_flip_buttons"><span class="alignleft"><?php _e( 'Always show flip buttons', 'ips' ); ?></span></label></th>
+						<td><input id="ips_show_flip_buttons" name="ips_show_flip_buttons" type="checkbox" <?php checked( isset( $ips_options['show_flip_buttons'] ) ? $ips_options['show_flip_buttons'] : '' , 1 ); ?> value="1" /></td>
+					</tr>
 
-				<tr valign="top" class="field">
-					<th class="label" scope="row"><label for="ips_flip_timelaps"><span class="alignleft"><?php _e( 'Flip time laps', 'ips' ); ?></span></label></th>
-					<td><input id="ips_flip_timelaps" type="number" step="100" min="1000" max="200000" name="ips_flip_timelaps" value="<?php echo isset(  $ips_options['flip_timelaps'] ) ? (int) $ips_options['flip_timelaps'] : '6000'; ?>" />
-						<p class="description"><?php _e( '(in miliseconds - default : 6000)', 'ips' ); ?></p>
-					</td>
-				</tr>
+					<tr valign="top" class="field">
+						<th class="label" scope="row"><label for="ips_autoflip"><span class="alignleft"><?php _e( 'Auto flip', 'ips' ); ?></span></label></th>
+						<td>
+							<input type="checkbox" id="ips_autoflip" name="ips_autoflip" value="1" <?php checked( isset( $ips_options['autoflip'] ) ? $ips_options['autoflip'] : 0 , 1 ); ?> />
+						</td>
+					</tr>
+
+					<tr valign="top" class="field">
+						<th class="label" scope="row"><label for="ips_flip_timelaps"><span class="alignleft"><?php _e( 'Flip time laps', 'ips' ); ?></span></label></th>
+						<td><input id="ips_flip_timelaps" type="number" step="100" min="1000" max="200000" name="ips_flip_timelaps" value="<?php echo isset(  $ips_options['flip_timelaps'] ) ? (int) $ips_options['flip_timelaps'] : '6000'; ?>" />
+							<p class="description"><?php _e( '(in miliseconds - default : 6000)', 'ips' ); ?></p>
+						</td>
+					</tr>
+
+				<?php endif;?>
 
 				<tr valign="top" class="field">
 					<td>
