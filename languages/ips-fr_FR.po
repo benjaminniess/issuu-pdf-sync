@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Issuu PDF Sync\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-04 11:00+1000\n"
-"PO-Revision-Date: 2015-03-04 11:00+1000\n"
+"POT-Creation-Date: 2015-06-28 18:35+1000\n"
+"PO-Revision-Date: 2015-06-28 18:38+1000\n"
 "Last-Translator: Benjamin Niess <bniess@beapi.fr>\n"
 "Language-Team: BeApi <contact@beapi.fr>\n"
 "Language: fr_FR\n"
@@ -15,315 +15,168 @@ msgstr ""
 "X-Generator: Poedit 1.6.3\n"
 "X-Poedit-SearchPath-0: ..\n"
 
-#: ../inc/class.admin.php:36
+#: ../classes/shortcodes.php:55
+msgid "Loading..."
+msgstr "Chargement..."
+
+#: ../classes/admin/main.php:37
 msgid "Options for Issuu PDF Sync"
 msgstr "Options d'Issuu PDF Uploader"
 
-#: ../inc/class.admin.php:36 ../inc/class.admin.php:69
-#: ../inc/class.admin.php:490
+#: ../classes/admin/main.php:37 ../classes/admin/main.php:163
+#: ../views/admin-options.tpl.php:2
 msgid "Issuu PDF Sync"
 msgstr "Issuu PDF Sync"
 
-#: ../inc/class.admin.php:61
+#: ../classes/admin/main.php:62
 msgid "Options updated!"
 msgstr "Options mises à jour !"
 
-#: ../inc/class.admin.php:74
-msgid "Issuu configuration"
-msgstr "Configuration Issuu"
-
-#: ../inc/class.admin.php:77
-msgid "Issuu API Key"
-msgstr "Clé API Issuu"
-
-#: ../inc/class.admin.php:78
-msgid "Get an Issuu API Key"
-msgstr "Obtenir une clé API Issuu"
-
-#: ../inc/class.admin.php:84
-msgid "Issuu private key"
-msgstr "Clé privée Issuu"
-
-#: ../inc/class.admin.php:89
-msgid "Automatically upload PDFs to Issuu"
-msgstr "Uploader automatiquement les PDF de la bibliothèque sur Issuu"
-
-#: ../inc/class.admin.php:94
-msgid "Add the Issuu PDF Sync button to TinyMCE"
-msgstr "Afficher le bouton Issuu PDF Sync à TinyMCE"
-
-#: ../inc/class.admin.php:99
-msgid "Access"
-msgstr ""
-
-#: ../inc/class.admin.php:110
-msgid "Public"
-msgstr ""
-
-#: ../inc/class.admin.php:111
-msgid "Private"
-msgstr ""
-
-#: ../inc/class.admin.php:116
-msgid "Default embed code configuration"
-msgstr "Configuration par défaut des codes embed"
-
-#: ../inc/class.admin.php:119 ../inc/class.admin.php:705
-msgid "Layout"
-msgstr "Modèle"
-
-#: ../inc/class.admin.php:121 ../inc/class.admin.php:707
-msgid "Two up"
-msgstr "Double page"
-
-#: ../inc/class.admin.php:122 ../inc/class.admin.php:708
-msgid "Single page"
-msgstr "Page simple"
-
-#: ../inc/class.admin.php:127
-msgid "Custom layout"
-msgstr "Modèle personnalisé"
-
-#: ../inc/class.admin.php:129
-msgid "Default"
-msgstr "Par défaut"
-
-#: ../inc/class.admin.php:138 ../inc/class.admin.php:713
-msgid "Width"
-msgstr "Largeur"
-
-#: ../inc/class.admin.php:143 ../inc/class.admin.php:718
-msgid "Height"
-msgstr "Hauteur"
-
-#: ../inc/class.admin.php:148 ../inc/class.admin.php:723
-msgid "Background color"
-msgstr "Couleur d'arrière plan"
-
-#: ../inc/class.admin.php:153 ../inc/class.admin.php:728
-msgid "Allow full screen"
-msgstr "Autoriser le plein écran"
-
-#: ../inc/class.admin.php:158 ../inc/class.admin.php:733
-msgid "Always show flip buttons"
-msgstr "Toujours afficher les boutons de navigaton"
-
-#: ../inc/class.admin.php:163 ../inc/class.admin.php:738
-msgid "Auto flip"
-msgstr "Défilement automatique"
-
-#: ../inc/class.admin.php:170 ../inc/class.admin.php:745
-msgid "Flip time laps"
-msgstr "Temps de défilement"
-
-#: ../inc/class.admin.php:172 ../inc/class.admin.php:747
-msgid "(in miliseconds - default : 6000)"
-msgstr "(en millisecondes - défaut : 6000)"
-
-#: ../inc/class.admin.php:178
-msgid "Save Changes"
-msgstr "Enregistrer les modifications"
-
-#: ../inc/class.admin.php:185
-msgid "How to insert a PDF Flipbook ?"
-msgstr "Comment insérer un Flipbook ?"
-
-#: ../inc/class.admin.php:190
-msgid ""
-"Make sure that the \"Automatically upload PDFs to Issuu\" box is checked or "
-"that you've manually send the PDF to the Issuu website."
-msgstr ""
-"Assurez-vous d'avoir coché l'option \"Uploader automatiquement les PDF de la "
-"bibliothèque sur Issuu\" ou d'avoir manuellement uploadé le fichier chez "
-"Issuu"
-
-#: ../inc/class.admin.php:192
-msgid "Click to Issuu button on the TinyMCE main bar"
-msgstr "Cliquez sur le bouton Issuu dans l'éditeur TinyMCE"
-
-#: ../inc/class.admin.php:196
-msgid ""
-"Select your PDF file in the dropdown list and add some specific params if "
-"you need. Note that you can change the default settings in the settings page"
-msgstr ""
-"Sélectionnez votre fichier PDF dans la liste déroulante et ajoutez les "
-"paramètres dont vous avez besoin"
-
-#: ../inc/class.admin.php:200
-msgid ""
-"Click to the insert button and then the shortcode will be generated. You can "
-"easily cut and past this shortcode everywhere in your content"
-msgstr ""
-"Cliquez sur le bouton d'insertion et le shortcode sera généré "
-"automatiquement. Vous pouvez facilement couper et coller ce shortcode ou "
-"vous le souhaitez"
-
-#: ../inc/class.admin.php:207
-msgid "How to manually use the shortcode ? (advanced usage)"
-msgstr "Comment utiliser le shortcode manuellement ? (utilisation avancée)"
-
-#: ../inc/class.admin.php:209
-msgid "[pdf issuu_pdf_id=\"id_of_your_PDF\" width=\"500\" height=\"300\"]"
-msgstr "[pdf issuu_pdf_id=\"id_de_votre_PDF\" width=\"500\" height=\"300\"]"
-
-#: ../inc/class.admin.php:210
-msgid ""
-"In this example, we want to specify a width and a height only for this PDF"
-msgstr ""
-"Dans cette exemple, nous voulons spécifier une largeur et une hauteur pour "
-"ce PDF uniquement"
-
-#: ../inc/class.admin.php:212
-msgid ""
-"[pdf issuu_pdf_id=\"id_of_your_PDF\" layout=\"browsing\" autoFlip=\"true\" "
-"autoFlipTime=\"4000\"]"
-msgstr ""
-"[pdf issuu_pdf_id=\"id_de_votre_PDF\" layout=\"browsing\" autoFlip=\"true\" "
-"autoFlipTime=\"4000\"]"
-
-#: ../inc/class.admin.php:213
-msgid ""
-"In this other example, we want to specify the browsing layout (one page "
-"presentation) and we want the PDF pages to autoflip each 4 seconds"
-msgstr ""
-"Dans cet autre exemple, nous voulons spécifier le format \"browsing\" (sur "
-"une seule page) et nous voulons que les pages défilent automatiquement "
-"toutes les 4 secondes"
-
-#: ../inc/class.admin.php:216
-msgid "Which params can be used with the shortcode ?"
-msgstr "Quels sont les paramètres qui peuvent être passés dans le shortcode ?"
-
-#: ../inc/class.admin.php:220
-msgid "The ISSUU PDF ID"
-msgstr "L'ID Issuu du PDF"
-
-#: ../inc/class.admin.php:225
-msgid "The width of the animation in pixels"
-msgstr "La largeur de l'animation en pixels"
-
-#: ../inc/class.admin.php:230
-msgid "The height of the animation in pixels"
-msgstr "La hauteur de l'animation en pixels"
-
-#: ../inc/class.admin.php:235
-msgid ""
-"The layout of the animation. Possible values : \"<strong>presentation</"
-"strong>\" (double page), \"<strong>browsing</strong>\" (single page)"
-msgstr ""
-"La présentation de l'animation. Valeurs possibles : \"<strong>presentation</"
-"strong>\" (double page), \"<strong>browsing</strong>\" (simple page)"
-
-#: ../inc/class.admin.php:240
-msgid "The background color - In hexadecimal format - without \"#\" "
-msgstr "La couleur de fond - En code hexadecimal - Sans le '#'"
-
-#: ../inc/class.admin.php:245
-msgid ""
-"Enable or disable the Auto Flip feature. Possible values : \"true\", \"false"
-"\""
-msgstr ""
-"Activer ou désactiver la fonction de défilement automatique. Valeurs "
-"possibles : \"true\", \"false\""
-
-#: ../inc/class.admin.php:250
-msgid "The timelaps for the page flipe in milliseconds"
-msgstr "Le temps de défilement en millisecondes"
-
-#: ../inc/class.admin.php:255
-msgid ""
-"Allways show the right left flip buttons. Possible values : \"true\", \"false"
-"\""
-msgstr ""
-"Toujours afficher les flèches droite et gauche. Valeurs possibles : \"true"
-"\", \"false\""
-
-#: ../inc/class.admin.php:260
-msgid ""
-"Allow the full screen mode (if not, open in a new window). Possible values : "
-"\"true\", \"false\""
-msgstr ""
-"Autoriser le mode plein écran (sinon, ouverture dans une nouvelle fenêtre). "
-"Valeurs possibles : \"true\", \"false\""
-
-#: ../inc/class.admin.php:456
+#: ../classes/admin/main.php:129
 msgid "Issuu PDF"
 msgstr "PDF Issuu"
 
-#: ../inc/class.admin.php:460
+#: ../classes/admin/main.php:133
 msgid "Issuu Document ID"
-msgstr ""
+msgstr "ID du document Issuu"
 
-#: ../inc/class.admin.php:466
+#: ../classes/admin/main.php:139
 msgid "Issuu Document Username"
-msgstr ""
+msgstr "Nom d'utilisateur du document Issuu"
 
-#: ../inc/class.admin.php:472
+#: ../classes/admin/main.php:145
 msgid "Issuu Document Name"
-msgstr ""
+msgstr "Nom du document Issuu"
 
-#: ../inc/class.admin.php:478
+#: ../classes/admin/main.php:151
 msgid "Issuu Document URL"
-msgstr ""
+msgstr "URL du document Issuu"
 
-#: ../inc/class.admin.php:484
+#: ../classes/admin/main.php:157
 msgid "Issuu Auto Upload"
 msgstr "Téléchargement automatique Issuu"
 
-#: ../inc/class.admin.php:590
+#: ../views/admin-insert-modal.tpl.php:1
+msgid "Insert an Issuu PDF Flipbook"
+msgstr "Insérer un Flipbook PDF"
+
+#: ../views/admin-insert-modal.tpl.php:9
+msgid "Select a PDF file"
+msgstr "Sélectionnez un fichier PDF"
+
+#: ../views/admin-insert-modal.tpl.php:22 ../views/admin-options.tpl.php:71
+msgid "Width"
+msgstr "Largeur"
+
+#: ../views/admin-insert-modal.tpl.php:27 ../views/admin-options.tpl.php:76
+msgid "Height"
+msgstr "Hauteur"
+
+#: ../views/admin-insert-modal.tpl.php:33 ../views/admin-options.tpl.php:52
+msgid "Layout"
+msgstr "Modèle"
+
+#: ../views/admin-insert-modal.tpl.php:35 ../views/admin-options.tpl.php:54
+msgid "Two up"
+msgstr "Double page"
+
+#: ../views/admin-insert-modal.tpl.php:36 ../views/admin-options.tpl.php:55
+msgid "Single page"
+msgstr "Page simple"
+
+#: ../views/admin-insert-modal.tpl.php:41 ../views/admin-options.tpl.php:81
+msgid "Background color"
+msgstr "Couleur d'arrière plan"
+
+#: ../views/admin-insert-modal.tpl.php:46 ../views/admin-options.tpl.php:86
+msgid "Allow full screen"
+msgstr "Autoriser le plein écran"
+
+#: ../views/admin-insert-modal.tpl.php:51 ../views/admin-options.tpl.php:91
+msgid "Always show flip buttons"
+msgstr "Toujours afficher les boutons de navigaton"
+
+#: ../views/admin-insert-modal.tpl.php:56 ../views/admin-options.tpl.php:96
+msgid "Auto flip"
+msgstr "Défilement automatique"
+
+#: ../views/admin-insert-modal.tpl.php:63 ../views/admin-options.tpl.php:103
+msgid "Flip time laps"
+msgstr "Temps de défilement"
+
+#: ../views/admin-insert-modal.tpl.php:65 ../views/admin-options.tpl.php:105
+msgid "(in miliseconds - default : 6000)"
+msgstr "(en millisecondes - défaut : 6000)"
+
+#: ../views/admin-insert-modal.tpl.php:73
+msgid "Insert the PDF"
+msgstr "Insérer le PDF"
+
+#: ../views/admin-media-javascript.tpl.php:4
 msgid "Issuu status"
 msgstr "Status du PDF"
 
-#: ../inc/class.admin.php:592 ../inc/sync-input.php:4
+#: ../views/admin-media-javascript.tpl.php:6
+#: ../views/admin-sync-input.tpl.php:4
 msgid "This PDF is already synchronised on Issuu"
 msgstr "Ce PDF est déjà synchronisé sur Issuu"
 
-#: ../inc/class.admin.php:592 ../inc/sync-input.php:11
+#: ../views/admin-media-javascript.tpl.php:6
+#: ../views/admin-sync-input.tpl.php:11
 msgid "Click here to delete this PDF from Issuu"
 msgstr "Cliquez-ici pour supprimer ce PDF des serveurs d'Issuu"
 
-#: ../inc/class.admin.php:594 ../inc/sync-input.php:21
+#: ../views/admin-media-javascript.tpl.php:8
+#: ../views/admin-sync-input.tpl.php:21
 msgid "This PDF is not synchronised on Issuu"
 msgstr "Ce PDF n'est pas synchronisé sur Issuu"
 
-#: ../inc/class.admin.php:594 ../inc/sync-input.php:27
+#: ../views/admin-media-javascript.tpl.php:8
+#: ../views/admin-sync-input.tpl.php:27
 msgid "Click here to send this PDF to Issuu"
 msgstr "Cliquez-ici pour envoyer ce PDF sur les serveurs d'Issuu"
 
-#: ../inc/class.admin.php:601 ../inc/sync-input.php:41
+#: ../views/admin-media-javascript.tpl.php:15
+#: ../views/admin-sync-input.tpl.php:41
 msgid "Are you sure you want to send this PDF on Issuu ?"
 msgstr "Cliquez-ici pour envoyer ce PDF sur les serveurs d'Issuu"
 
-#: ../inc/class.admin.php:604 ../inc/class.admin.php:624
-#: ../inc/sync-input.php:44 ../inc/sync-input.php:64
+#: ../views/admin-media-javascript.tpl.php:18
+#: ../views/admin-media-javascript.tpl.php:38
+#: ../views/admin-sync-input.tpl.php:44 ../views/admin-sync-input.tpl.php:64
 msgid "Loading"
 msgstr "Chargement"
 
-#: ../inc/class.admin.php:609 ../inc/sync-input.php:49
+#: ../views/admin-media-javascript.tpl.php:23
+#: ../views/admin-sync-input.tpl.php:49
 msgid "An error occured during synchronisation with Issuu"
 msgstr "Une erreur est survenue durant la synchrinosation avec Issuu"
 
-#: ../inc/class.admin.php:612 ../inc/sync-input.php:52
+#: ../views/admin-media-javascript.tpl.php:26
+#: ../views/admin-sync-input.tpl.php:52
 msgid "Your PDF is now on Issuu !"
 msgstr "Votre PDF est désormais sur Issuu !"
 
-#: ../inc/class.admin.php:621 ../inc/sync-input.php:61
+#: ../views/admin-media-javascript.tpl.php:35
+#: ../views/admin-sync-input.tpl.php:61
 msgid "Are you sure you want to delete this PDF from Issuu ?"
 msgstr "Cliquez-ici pour supprimer ce PDF des serveurs d'Issuu"
 
-#: ../inc/class.admin.php:629 ../inc/sync-input.php:69
+#: ../views/admin-media-javascript.tpl.php:43
+#: ../views/admin-sync-input.tpl.php:69
 msgid "Your PDF has been successfuly deleted"
 msgstr "Votre PDF a bien été supprimé des serveurs d'Issuu"
 
-#: ../inc/class.admin.php:632 ../inc/sync-input.php:72
+#: ../views/admin-media-javascript.tpl.php:46
+#: ../views/admin-sync-input.tpl.php:72
 msgid "An error occured during PDF deletion"
 msgstr "Une erreur est survenue durant la suppression du PDF"
 
-#: ../inc/class.admin.php:677
+#: ../views/admin-no-pdf-yet.tpl.php:1
 msgid "You don't have synced PDF yet. Let's see why!"
 msgstr "Vous n'avez pas encore de PDF synchronisé. Voyons pourquoi !"
 
-#: ../inc/class.admin.php:679
+#: ../views/admin-no-pdf-yet.tpl.php:3
 msgid ""
 "You may have configured the plugin after having uploaded some PDF. In this, "
 "case, you'll have to edit each of them and click to the sync link. We don't "
@@ -334,7 +187,7 @@ msgstr ""
 "synchronisation Issuu. Nous n'avons pas encore de fonction pour "
 "resynchroniser tout."
 
-#: ../inc/class.admin.php:680
+#: ../views/admin-no-pdf-yet.tpl.php:4
 msgid ""
 "You may have used the media button right now, in this post. Save the post, "
 "and you'll see the PDF after refreshing."
@@ -342,7 +195,7 @@ msgstr ""
 "Vous venez peut-être de télécharger votre PDF via le bouton média dans cette "
 "page. Dans ce cas, enregistrez ou rafraîchissez simplement la page."
 
-#: ../inc/class.admin.php:681
+#: ../views/admin-no-pdf-yet.tpl.php:5
 msgid ""
 "You may have not used the official media library. It will not work if you "
 "have uploaded PDF's with your FTP software for example."
@@ -351,7 +204,7 @@ msgstr ""
 "n'y aura pas de synchro si vous avez téléchargé des fichiers PDF via votre "
 "logiciel FTP par exemple."
 
-#: ../inc/class.admin.php:682
+#: ../views/admin-no-pdf-yet.tpl.php:6
 msgid ""
 "You may have a communication problem with Issuu, especially if you use a "
 "htaccess file to deny the access to your site"
@@ -359,21 +212,198 @@ msgstr ""
 "Vous avez peut-être un problème de communication avec Issuu, principalement "
 "si vous utilisez un fichier .htaccess qui bloque l'accès à votre site"
 
-#: ../inc/class.admin.php:685
-msgid "Insert an Issuu PDF Flipbook"
-msgstr "Insérer un Flipbook PDF"
+#: ../views/admin-options.tpl.php:7
+msgid "Issuu configuration"
+msgstr "Configuration Issuu"
 
-#: ../inc/class.admin.php:693
-msgid "Select a PDF file"
-msgstr "Sélectionnez un fichier PDF"
+#: ../views/admin-options.tpl.php:10
+msgid "Issuu API Key"
+msgstr "Clé API Issuu"
 
-#: ../inc/class.admin.php:753
-msgid "Insert the PDF"
-msgstr "Insérer le PDF"
+#: ../views/admin-options.tpl.php:11
+msgid "Get an Issuu API Key"
+msgstr "Obtenir une clé API Issuu"
 
-#: ../inc/shortcodes.php:43
-msgid "Loading..."
-msgstr "Chargement..."
+#: ../views/admin-options.tpl.php:17
+msgid "Issuu private key"
+msgstr "Clé privée Issuu"
+
+#: ../views/admin-options.tpl.php:22
+msgid "Automatically upload PDFs to Issuu"
+msgstr "Uploader automatiquement les PDF de la bibliothèque sur Issuu"
+
+#: ../views/admin-options.tpl.php:27
+msgid "Add the Issuu PDF Sync button to TinyMCE"
+msgstr "Afficher le bouton Issuu PDF Sync à TinyMCE"
+
+#: ../views/admin-options.tpl.php:32
+msgid "Access"
+msgstr "Accès"
+
+#: ../views/admin-options.tpl.php:35
+msgid "Public"
+msgstr "Publique"
+
+#: ../views/admin-options.tpl.php:36
+msgid "Private"
+msgstr "Privé"
+
+#: ../views/admin-options.tpl.php:41
+msgid "Default embed code configuration"
+msgstr "Configuration par défaut des codes embed"
+
+#: ../views/admin-options.tpl.php:44
+msgid "API version"
+msgstr "Version de l'API"
+
+#: ../views/admin-options.tpl.php:46
+msgid "Use the new Issuu API"
+msgstr "Utiliser la nouvelle API Issuu"
+
+#: ../views/admin-options.tpl.php:47
+msgid ""
+"The new Issuu API has less customization params than the old one but it "
+"works on mobiles and tablets. The old API let you customize more options but "
+"works on desktop only."
+msgstr ""
+"La nouvelle version de l'API propose moins d'options de personnalisation "
+"mais fonctionne sur mobile et tablettes. L'ancienne API permet de "
+"personnaliser plus de choses mais ne fonctionne que sur desktop."
+
+#: ../views/admin-options.tpl.php:60
+msgid "Custom layout"
+msgstr "Modèle personnalisé"
+
+#: ../views/admin-options.tpl.php:62
+msgid "Default"
+msgstr "Par défaut"
+
+#: ../views/admin-options.tpl.php:111
+msgid "Save Changes"
+msgstr "Enregistrer les modifications"
+
+#: ../views/admin-options.tpl.php:118
+msgid "How to insert a PDF Flipbook ?"
+msgstr "Comment insérer un Flipbook ?"
+
+#: ../views/admin-options.tpl.php:123
+msgid ""
+"Make sure that the \"Automatically upload PDFs to Issuu\" box is checked or "
+"that you've manually send the PDF to the Issuu website."
+msgstr ""
+"Assurez-vous d'avoir coché l'option \"Uploader automatiquement les PDF de la "
+"bibliothèque sur Issuu\" ou d'avoir manuellement uploadé le fichier chez "
+"Issuu"
+
+#: ../views/admin-options.tpl.php:125
+msgid "Click to Issuu button on the TinyMCE main bar"
+msgstr "Cliquez sur le bouton Issuu dans l'éditeur TinyMCE"
+
+#: ../views/admin-options.tpl.php:129
+msgid ""
+"Select your PDF file in the dropdown list and add some specific params if "
+"you need. Note that you can change the default settings in the settings page"
+msgstr ""
+"Sélectionnez votre fichier PDF dans la liste déroulante et ajoutez les "
+"paramètres dont vous avez besoin"
+
+#: ../views/admin-options.tpl.php:133
+msgid ""
+"Click to the insert button and then the shortcode will be generated. You can "
+"easily cut and past this shortcode everywhere in your content"
+msgstr ""
+"Cliquez sur le bouton d'insertion et le shortcode sera généré "
+"automatiquement. Vous pouvez facilement couper et coller ce shortcode ou "
+"vous le souhaitez"
+
+#: ../views/admin-options.tpl.php:142
+msgid "How to manually use the shortcode ? (advanced usage)"
+msgstr "Comment utiliser le shortcode manuellement ? (utilisation avancée)"
+
+#: ../views/admin-options.tpl.php:145
+msgid "[pdf issuu_pdf_id=\"id_of_your_PDF\" width=\"500\" height=\"300\"]"
+msgstr "[pdf issuu_pdf_id=\"id_de_votre_PDF\" width=\"500\" height=\"300\"]"
+
+#: ../views/admin-options.tpl.php:146
+msgid ""
+"In this example, we want to specify a width and a height only for this PDF"
+msgstr ""
+"Dans cette exemple, nous voulons spécifier une largeur et une hauteur pour "
+"ce PDF uniquement"
+
+#: ../views/admin-options.tpl.php:148
+msgid ""
+"[pdf issuu_pdf_id=\"id_of_your_PDF\" layout=\"browsing\" autoFlip=\"true\" "
+"autoFlipTime=\"4000\"]"
+msgstr ""
+"[pdf issuu_pdf_id=\"id_de_votre_PDF\" layout=\"browsing\" autoFlip=\"true\" "
+"autoFlipTime=\"4000\"]"
+
+#: ../views/admin-options.tpl.php:149
+msgid ""
+"<strong>OLD API ONLY</strong> In this other example, we want to specify the "
+"browsing layout (one page presentation) and we want the PDF pages to "
+"autoflip each 4 seconds"
+msgstr ""
+"<strong>Ancienne API uniquement</strong>Dans cet autre exemple, nous voulons "
+"spécifier le format \"browsing\" (sur une seule page) et nous voulons que "
+"les pages défilent automatiquement toutes les 4 secondes"
+
+#: ../views/admin-options.tpl.php:152
+msgid "Which params can be used with the shortcode?"
+msgstr "Quels sont les paramètres qui peuvent être passés dans le shortcode ?"
+
+#: ../views/admin-options.tpl.php:156
+msgid "The ISSUU PDF ID"
+msgstr "L'ID Issuu du PDF"
+
+#: ../views/admin-options.tpl.php:161
+msgid "The width of the animation in pixels"
+msgstr "La largeur de l'animation en pixels"
+
+#: ../views/admin-options.tpl.php:166
+msgid "The height of the animation in pixels"
+msgstr "La hauteur de l'animation en pixels"
+
+#: ../views/admin-options.tpl.php:172
+msgid ""
+"The layout of the animation. Possible values : \"<strong>presentation</"
+"strong>\" (double page), \"<strong>browsing</strong>\" (single page)"
+msgstr ""
+"La présentation de l'animation. Valeurs possibles : \"<strong>presentation</"
+"strong>\" (double page), \"<strong>browsing</strong>\" (simple page)"
+
+#: ../views/admin-options.tpl.php:177
+msgid "The background color - In hexadecimal format - without \"#\" "
+msgstr "La couleur de fond - En code hexadecimal - Sans le '#'"
+
+#: ../views/admin-options.tpl.php:182
+msgid ""
+"Enable or disable the Auto Flip feature. Possible values : \"true\", \"false"
+"\""
+msgstr ""
+"Activer ou désactiver la fonction de défilement automatique. Valeurs "
+"possibles : \"true\", \"false\""
+
+#: ../views/admin-options.tpl.php:187
+msgid "The timelaps for the page flipe in milliseconds"
+msgstr "Le temps de défilement en millisecondes"
+
+#: ../views/admin-options.tpl.php:192
+msgid ""
+"Allways show the right left flip buttons. Possible values : \"true\", \"false"
+"\""
+msgstr ""
+"Toujours afficher les flèches droite et gauche. Valeurs possibles : \"true"
+"\", \"false\""
+
+#: ../views/admin-options.tpl.php:197
+msgid ""
+"Allow the full screen mode (if not, open in a new window). Possible values : "
+"\"true\", \"false\""
+msgstr ""
+"Autoriser le mode plein écran (sinon, ouverture dans une nouvelle fenêtre). "
+"Valeurs possibles : \"true\", \"false\""
 
 #~ msgid "No available PDF"
 #~ msgstr "Aucun PDF disponible"
