@@ -19,6 +19,8 @@ class IPS_Shortcodes {
 	}
 
 	public static function shortcode_old_api( $atts = array() ) {
+		global $ips_options;
+
 		if ( isset( $ips_options['layout'] ) && 2 == $ips_options['layout'] ) {
 			$layout = 'presentation';
 		} else {
@@ -111,6 +113,8 @@ class IPS_Shortcodes {
 	}
 
 	public static function shortcode_new_api( $atts = array() ) {
+		global $ips_options;
+		
 		extract(shortcode_atts( array(
 			'issuu_pdf_id' => null,
 			'width' => $ips_options['width'],
