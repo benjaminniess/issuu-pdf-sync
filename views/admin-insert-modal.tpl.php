@@ -28,7 +28,7 @@
 					<td><input id="ips_height" type="number" min="0" max="2000" name="ips_height" value="<?php echo isset(  $ips_options['height'] ) ? (int) $ips_options['height'] : ''; ?>" /> px</td>
 				</tr>
 
-				<?php if ( $api_version == 'old' ) : ?>
+				<?php if ( 'old' == $api_version ) : ?>
 					<tr valign="top" class="field">
 						<th class="label" scope="row"><label for="ips_layout"><span class="alignleft"><?php _e( 'Layout', 'ips' ); ?></span></label></th>
 						<td>

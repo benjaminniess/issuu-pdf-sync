@@ -166,7 +166,7 @@
 				<td><p class="description"><?php _e( 'The height of the animation in pixels', 'ips' ); ?></p></td>
 			</tr>
 
-			<?php if ( !isset( $ips_options['new_api_version'] ) || (int) $ips_options['new_api_version'] <= 0 ) : ?>
+			<?php if ( ! isset( $ips_options['new_api_version'] ) || 0 == (int) $ips_options['new_api_version'] ) : ?>
 				<tr valign="top" class="field">
 					<th class="label" scope="row"><label><span class="alignleft">layout</span></label><br /></th>
 					<td><p class="description"><?php _e( 'The layout of the animation. Possible values : "<strong>presentation</strong>" (double page), "<strong>browsing</strong>" (single page)', 'ips' ); ?></p></td>

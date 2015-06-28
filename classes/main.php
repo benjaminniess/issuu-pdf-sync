@@ -31,7 +31,6 @@ class IPS_Main {
 			return false;
 		}
 
-
 		// Get attachment infos
 		$attachment = get_post( $attachment_id );
 
@@ -87,11 +86,9 @@ class IPS_Main {
 			return false;
 		}
 
-
 		if ( ! $issuu->delete_pdf_from_issuu( $issuu_pdf_name ) ) {
 			return false;
 		}
-
 
 		// Update the attachment post meta with the Issuu PDF ID
 		delete_post_meta( $attachment_id, 'issuu_pdf_id' );
