@@ -3,8 +3,8 @@ Contributors: benjaminniess, momo360modena, pronamic, remcotolsma
 Donate link: http://beapi.fr/donate
 Tags: Issuu, flipbook, PDF, upload, synchronisation, flash, flip, book
 Requires at least: 3.1
-Tested up to: 4.2
-Stable tag: 2.2.8
+Tested up to: 4.2.2
+Stable tag: 3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -52,7 +52,7 @@ In this example, we want to specify a width and a height only for this PDF
 
 In this other example, we want to specify the browsing layout (one page presentation) and we want the PDF pages to autoflip each 4 seconds
 
-You will see all avaliable params inside the plugin option pannel
+You will see all available params inside the plugin option pannel
 
 = I choose another skin but it doesn't work. why ?
 
@@ -67,6 +67,14 @@ If you want to make some customisation in the Issuu player, you need to copy the
 Create your po translation file from the ips.pot and keep the previx (eg. ips-us_US.po)
 Paste the po and mo file into your wp-content/languages/plugins/ folder
 
+= What is the difference between the old and the new Issuu API? =
+
+The new Issuu API has less customization params than the old one but it works on mobiles and tablets. The old API let you customize more options but works on desktop only.
+
+= The PDF are not showing on mobile/tablet =
+
+You need to enable the the embed API in the plugin's settings page
+
 == Screenshots ==
 
 1.	The config page
@@ -78,6 +86,11 @@ Paste the po and mo file into your wp-content/languages/plugins/ folder
 
 
 == Changelog ==
+
+= 3.0 =
+* Added new Issuu embed code API. The old one is still available and will stay used by default if you update this plugin.
+* Code refactoring.
+* WordPress Core coding standards respected
 
 = 2.2.8 =
 *   Added the ability to load a mo (translation) file from wp-content/languages/plugins/ folder
@@ -98,7 +111,7 @@ Paste the po and mo file into your wp-content/languages/plugins/ folder
 *	Added Russian translations by Konstantin Ryabenko
 
 = 2.0.8 =
-*	Fix bug in Firefox when default layout is choosen
+*	Fix bug in Firefox when default layout is chosen
 
 = 2.0.7 =
 *	?
