@@ -31,14 +31,6 @@
 			<tr valign="top" class="field">
 				<th class="label" scope="row"><label for="ips[access]"><span class="alignleft"><?php _e( 'Access', 'ips' ); ?></span></label></th>
 				<td>
-					<?php
-
-					$access = 'public';
-					if ( isset( $ips_options['access'] ) ) {
-						$access = $ips_options['access'];
-					}
-
-					?>
 					<select id="ips[access]" name="ips[access]">
 						<option value="public" <?php selected( $access, 'public' ); ?>><?php _e( 'Public', 'ips' ); ?></option>
 						<option value="private" <?php selected( $access, 'private' ); ?>><?php _e( 'Private', 'ips' ); ?></option>
@@ -49,10 +41,9 @@
 			<tr><td colspan="2"><h3><?php _e( 'Default embed code configuration', 'ips' ); ?></h3></td></tr>
 
 			<tr valign="top" class="field">
-				<th class="label" scope="row"><label for="ips[api_version]"><span class="alignleft"><?php _e( 'API version', 'ips' ); ?></span></label></th>
+				<th class="label" scope="row"><label for="ips[new_api_version]"><span class="alignleft"><?php _e( 'API version', 'ips' ); ?></span></label></th>
 				<td>
-					<p style="height:25px;"><input id="ips-api-version-old" type="radio" name="ips[api_version]" value="old" <?php checked( ( isset( $ips_options['api_version'] ) && 'old' == $ips_options['api_version'] ) || ! isset( $ips_options['api_version'] ) ? 1 : 0 , 1 ); ?> /> <label for="ips-api-version-old"><?php _e( 'Old version', 'ips' ); ?></label></p>
-					<p><input type="radio" id="ips-api-version-new" name="ips[api_version]" value="new" <?php checked( isset( $ips_options['api_version'] ) && 'new' == $ips_options['api_version'] ? 1 : 0 , 1 ); ?> /> <label for="ips-api-version-new"><?php _e( 'New version', 'ips' ); ?></label></p>
+					<p style="height:25px;"><input id="ips-new-api-version" type="checkbox" name="ips[new_api_version]" value="1" <?php checked( ( isset( $ips_options['new_api_version'] ) && 1 == (int) $ips_options['new_api_version'] ) ? 1 : 0 , 1 ); ?> /> <label for="ips-new-api-version"><?php _e( 'Use the new Issuu API', 'ips' ); ?></label></p>
 				</td>
 			</tr>
 

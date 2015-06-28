@@ -66,6 +66,11 @@ class IPS_Admin_Main {
 			$ips_options = array();
 		}
 
+		$access = 'public';
+		if ( isset( $ips_options['access'] ) ) {
+			$access = esc_attr( $ips_options['access'] );
+		}
+
 		$tpl = IPS_Main::load_template( 'admin-options' );
 		if ( empty( $tpl ) ) {
 			return false;
@@ -298,7 +303,7 @@ class IPS_Admin_Main {
 			return false;
 		}
 
-		$api_version = isset( $ips_options['api_version'] ) && $ips_options['api_version'] == 'new' ? 'new' : 'old';
+		$api_version = ( isset( $ips_options['new_api_version'] ) && '1' == $ips_options['new_api_version'] ) ? 'new' : 'old';
 
 		include ( $tpl );
 		exit();

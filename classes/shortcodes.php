@@ -11,7 +11,7 @@ class IPS_Shortcodes {
 	public static function issuu_pdf_embeder($atts, $content = null) {
 		global $ips_options;
 
-		if ( isset( $ips_options['api_version'] ) && 'new' == $ips_options['api_version'] ) {
+		if ( isset( $ips_options['new_api_version'] ) && '1' == $ips_options['new_api_version'] ) {
 			return self::shortcode_new_api( $atts );
 		} else {
 			return self::shortcode_old_api( $atts );
