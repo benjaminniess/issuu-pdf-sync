@@ -2,9 +2,9 @@
 Contributors: benjaminniess, momo360modena, pronamic, remcotolsma
 Donate link: http://beapi.fr/donate
 Tags: Issuu, flipbook, PDF, upload, synchronisation, flash, flip, book
-Requires at least: 3.1
+Requires at least: 3.5
 Tested up to: 4.2.2
-Stable tag: 3.0
+Stable tag: 3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,13 @@ You need to enable the the embed API in the plugin's settings page
 
 
 == Changelog ==
+
+= 3.1 =
+* Fixed sync error when the PDF file name is to long
+* Fixed conditional logic on template loading
+* Removed < WP 3.5 code
+* Removed useless queries to Issuu
+* Removed useless extra fields in the media edition screen and add them as static data information
 
 = 3.0 =
 * Added new Issuu embed code API. The old one is still available and will stay used by default if you update this plugin.
