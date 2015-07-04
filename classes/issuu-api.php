@@ -55,6 +55,9 @@ class IPS_Issuu_Api {
 
 		$parameters = array_merge( $attachment_data, $default_parameters );
 
+		// Issuu API is expecting for a 50 characters max string
+		$parameters['name'] = substr( $parameters['name'], 0, 45 );
+
 		// Sort request parameters alphabetically (e.g. foo=1, bar=2, baz=3 sorts to bar=2, baz=3, foo=1)
 		ksort( $parameters );
 
