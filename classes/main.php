@@ -106,10 +106,11 @@ class IPS_Main {
 		if ( empty( $file ) || ! is_string( $file ) ) {
 			return false;
 		}
-		if ( is_file( STYLESHEETPATH .'views/ips/' . $file .'.tpl.php' ) ) { // Use custom type from child theme
-			return( STYLESHEETPATH .'views/ips/' . $file .'.tpl.php' );
-		} elseif ( is_file( TEMPLATEPATH .'views/ips/' . $file .'.tpl.php' ) ) { // Use custom type from parent theme
-			return( TEMPLATEPATH .'views/ips/' . $file .'.tpl.php' );
+
+		if ( is_file( STYLESHEETPATH .'/views/ips/' . $file .'.tpl.php' ) ) { // Use custom type from child theme
+			return( STYLESHEETPATH .'/views/ips/' . $file .'.tpl.php' );
+		} elseif ( is_file( TEMPLATEPATH .'/views/ips/' . $file .'.tpl.php' ) ) { // Use custom type from parent theme
+			return( TEMPLATEPATH .'/views/ips/' . $file .'.tpl.php' );
 		}
 
 		return( IPS_DIR . '/views/' . $file .'.tpl.php' );
