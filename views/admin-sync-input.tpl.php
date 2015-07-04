@@ -1,4 +1,4 @@
-<?php if ( ! empty( $issuu_document_id ) ) : ?>
+<?php if ( ! empty( $pdf_data['issuu_pdf_sync_id']['value'] ) ) : ?>
 
 	<span style="color:#00AA00;" id="admin_delete_pdf">
 		<?php _e( 'This PDF is already synchronised on Issuu', 'ips' ); ?><br />

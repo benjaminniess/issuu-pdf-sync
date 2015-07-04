@@ -5,7 +5,7 @@ class IPS_Admin_Main {
 	function __construct() {
 		global $pagenow;
 
-		add_filter( 'attachment_fields_to_edit', array( __CLASS__, 'insert_ips_button' ), 10, 2 );
+		add_filter( 'attachment_fields_to_edit', array( __CLASS__, 'insert_ips_sync_link' ), 10, 2 );
 		add_filter( 'media_send_to_editor', array( __CLASS__, 'send_to_editor' ) );
 
 		if ( 'media.php' == $pagenow ) {
@@ -15,7 +15,7 @@ class IPS_Admin_Main {
 		add_action( 'admin_init', array( __CLASS__, 'check_js_pdf_edition' ) );
 		add_action( 'admin_menu', array( __CLASS__, 'add_plugin_menu' ) );
 
-		add_action( 'admin_init', array( __CLASS__, 'init' ) );
+		add_action( 'admin_init', array( __CLASS__, 'enqueue_scripts' ) );
 
 		// Add the tinyMCE button
 		add_action( 'admin_init', array( __CLASS__, 'add_buttons' ) );
@@ -23,7 +23,10 @@ class IPS_Admin_Main {
 
 	}
 
-	public static function init() {
+	/**
+	 * Enqueue the required scripts on the correct pages
+	 */
+	public static function enqueue_scripts() {
 		global $pagenow;
 
 		wp_enqueue_script( 'jquery' );
@@ -33,6 +36,9 @@ class IPS_Admin_Main {
 		}
 	}
 
+	/**
+	 * Register the WordPress options page
+	 */
 	public static function add_plugin_menu() {
 		add_options_page( __( 'Options for Issuu PDF Sync', 'ips' ), __( 'Issuu PDF Sync', 'ips' ), 'manage_options', 'ips-options', array( __CLASS__, 'display_options' ) );
 	}
@@ -79,22 +85,18 @@ class IPS_Admin_Main {
 		include( $tpl );
 	}
 
-
-
-
-
 	/**
-	 * Inserts Issuu PDF Sync button into media library popup
+	 * On the media edition screen, add a link to Sync/unsync the PDF to Issuu servers + extra data about the PDF
+	 *
 	 * @return the amended form_fields structure
 	 * @param $form_fields Object
-	 * @param $post Object
+	 * @param $attachment Object
 	 */
-	public static function insert_ips_button( $form_fields, $attachment ) {
+	public static function insert_ips_sync_link( $form_fields = array(), $attachment = false ) {
 		global $wp_version, $ips_options;
 
-		if ( version_compare( $wp_version, '3.5', '<' ) ) {
-			if ( ! isset( $form_fields ) || empty( $form_fields ) || ! isset( $attachment ) || empty( $attachment ) ) {
-				return $form_fields; }
+		if ( ! isset( $attachment ) || empty( $attachment ) ) {
+			return $form_fields;
 		}
 
 		// Only add the extra button if the attachment is a PDF file
@@ -114,63 +116,46 @@ class IPS_Admin_Main {
 		$issuu_pdf_name = get_post_meta( $attachment->ID, 'issuu_pdf_name', true );
 		$disable_auto_upload = get_post_meta( $attachment->ID, 'disable_auto_upload', true );
 
-		$issuu_url = sprintf( 'http://issuu.com/%s/docs/%s', $issuu_pdf_username, $issuu_pdf_name );
+		$issuu_url = ( ! empty( $issuu_pdf_username ) && ! empty( $issuu_pdf_name ) ) ? sprintf( 'http://issuu.com/%s/docs/%s', $issuu_pdf_username, $issuu_pdf_name ) : false;
 
-		// Upload the PDF to Issuu if necessary and if the Auto upload feature is enabled
-		if ( empty( $issuu_pdf_id ) && isset( $ips_options['auto_upload'] ) && 1 == $ips_options['auto_upload'] && 1 != $disable_auto_upload ) {
-			$issuu_pdf_id = IPS_Main::sync_pdf( $attachment->ID );
-		}
+		// The extra data array just for debugging info
+		$pdf_data = array(
+			'issuu_pdf_sync_id' => array( 'name' => __( 'Issuu PDF ID', 'ips' ), 'value' => $issuu_pdf_id ),
+			'issuu_pdf_username' => array( 'name' => __( 'Issuu PDF username', 'ips' ), 'value' => $issuu_pdf_username ),
+			'issuu_pdf_name' => array( 'name' => __( 'Issuu PDF file name', 'ips' ), 'value' => $issuu_pdf_name ),
+			'issuu_pdf_url' => array( 'name' => __( 'Issuu PDF URL', 'ips' ), 'value' => $issuu_url ),
+		);
 
-		if ( version_compare( $wp_version, '3.5', '<' ) ) {
-			if ( empty( $issuu_pdf_id ) ) {
-				return $form_fields;
+		// The Issuu sync/unsync link
+		$form_fields['issuu_pdf_sync'] = array(
+			'show_in_edit'   => true,
+			'label'          => __( 'Issuu PDF Sync', 'ips' ),
+			'input'          => 'issuu_pdf_sync',
+			'issuu_pdf_sync' => self::get_sync_input( $attachment->ID, $pdf_data )
+		);
+
+		if ( ! empty( $issuu_pdf_id ) ) {
+			foreach ( $pdf_data as $field_key => $field ) {
+				$form_fields[ $field_key ] = array(
+					'show_in_edit' => true,
+					'label' => $field['name'],
+					'input' => $field_key,
+					$field_key => ! empty( $field['value'] ) ? $field['value'] : __( 'Empty', 'ips' ),
+				);
 			}
-
-			$form_fields['url']['html'] .= "<button type=\"button\" class='button urlissuupdfsync issuu-pdf-" . $issuu_pdf_id . "' data-link-url=\"[pdf issuu_pdf_id=" . $issuu_pdf_id . "]\" title='[pdf issuu_pdf_id=\"" . $issuu_pdf_id . "\"]'>" . _( 'Issuu PDF' ) . '</button>';
-		} else {
-			$form_fields['issuu_pdf_sync_id'] = array(
-				'show_in_edit' => true,
-				'label'        => __( 'Issuu Document ID', 'isp' ),
-				'value'        => $issuu_pdf_id,
-			);
-
-			$form_fields['issuu_pdf_username'] = array(
-				'show_in_edit' => true,
-				'label'        => __( 'Issuu Document Username', 'isp' ),
-				'value'        => $issuu_pdf_username,
-			);
-
-			$form_fields['issuu_pdf_name'] = array(
-				'show_in_edit' => true,
-				'label'        => __( 'Issuu Document Name', 'isp' ),
-				'value'        => $issuu_pdf_name,
-			);
-
-			$form_fields['issuu_pdf_url'] = array(
-				'show_in_edit' => true,
-				'label'        => __( 'Issuu Document URL', 'isp' ),
-				'value'        => $issuu_url,
-			);
-
-			$form_fields['issuu_pdf_sync_auto_upload'] = array(
-				'show_in_edit' => true,
-				'label'        => __( 'Issuu Auto Upload', 'isp' ),
-				'value'        => $disable_auto_upload,
-			);
-
-			$form_fields['issuu_pdf_sync'] = array(
-				'show_in_edit'   => true,
-				'label'          => __( 'Issuu PDF Sync', 'isp' ),
-				'value'          => $disable_auto_upload,
-				'input'          => 'issuu_pdf_sync',
-				'issuu_pdf_sync' => self::get_sync_input( $attachment->ID, $issuu_pdf_id )
-			);
 		}
 
 		return $form_fields;
 	}
 
-	public static function get_sync_input( $attachment_id, $issuu_document_id ) {
+	/**
+	 * The Issuu sync/unsync link HTML structure + javascript
+	 *
+	 * @param $attachment_id
+	 * @param $pdf_data
+	 * @return bool|string
+	 */
+	public static function get_sync_input( $attachment_id, $pdf_data ) {
 		$tpl = IPS_Main::load_template( 'admin-sync-input' );
 		if ( empty( $tpl ) ) {
 			return false;
