@@ -26,6 +26,12 @@ class IPS_Main {
 		}
 	}
 
+	/**
+	 * Init the Issuu API class and send the attachment to Issuu only if it's a PDF
+	 *
+	 * @param int $attachment_id
+	 * @return bool
+	 */
 	public static function sync_pdf( $attachment_id = 0 ) {
 		if ( 0 >= (int) $attachment_id ) {
 			return false;
@@ -63,6 +69,12 @@ class IPS_Main {
 		return $send_to_issuu->documentId;
 	}
 
+	/**
+	 * Remove the PDF from the Issuu servers
+	 *
+	 * @param int $attachment_id
+	 * @return bool
+	 */
 	public static function unsync_pdf( $attachment_id = 0 ){
 		if ( 0 >= (int) $attachment_id ) {
 			return false;
