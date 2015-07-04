@@ -206,7 +206,7 @@ class IPS_Admin_Main {
 
 			$sync = IPS_Main::sync_pdf( (int) $_GET['attachment_id'] );
 			echo ( true == $sync ) ? 'true' : 'false';
-			die();
+			exit();
 		} elseif ( 'delete_pdf' == $_GET['action'] ) {
 
 			//check if the nonce is correct
@@ -214,7 +214,7 @@ class IPS_Admin_Main {
 
 			$sync = IPS_Main::unsync_pdf( (int) $_GET['attachment_id'] );
 			echo ( true == $sync ) ? 'true' : 'false';
-			die();
+			exit();
 		}
 	}
 
