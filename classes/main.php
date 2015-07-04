@@ -2,7 +2,7 @@
 class IPS_Main {
 
 	function __construct() {
-
+		add_action( 'add_attachment', array( __CLASS__, 'maybe_sync_pdf' ) );
 	}
 
 	public static function install() {
@@ -25,6 +25,28 @@ class IPS_Main {
 			) );
 		}
 	}
+
+	/**
+	 * When a new attachment is uploaded, call the send_to_issuu function if the auto upload option is set
+	 *
+	 * @param int $attachment_id
+	 * @return bool
+	 */
+	public static function maybe_sync_pdf( $attachment_id = 0 ) {
+		global $ips_options;
+
+		if ( 0 >= (int) $attachment_id ) {
+			return false;
+		}
+
+		// Upload the PDF to Issuu if necessary and if the Auto upload feature is enabled
+		if ( ! isset( $ips_options['auto_upload'] ) || 1 != $ips_options['auto_upload'] ) {
+			return false;
+		}
+
+		return self::sync_pdf( $attachment_id );
+	}
+
 
 	/**
 	 * Init the Issuu API class and send the attachment to Issuu only if it's a PDF
