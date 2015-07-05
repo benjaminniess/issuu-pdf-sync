@@ -7,6 +7,8 @@ class IPS_Issuu_Api {
 	private $issuu_secret_key = false;
 	private $access = false;
 
+	private $messages = array();
+
 	function __construct() {
 		$this->set_instance();
 	}
@@ -22,10 +24,36 @@ class IPS_Issuu_Api {
 		$this->issuu_secret_key = esc_attr( $ips_options['issuu_secret_key'] );
 		$this->access = isset( $ips_options['access'] ) ? $ips_options['access'] : 'public';
 
+		$this->messages = array(
+			// Error messages
+			10 => array( 'type' => 'error', 'message' => __( 'The options page seems to not set correctly', 'ips' ) ),
+			20 => array( 'type' => 'error', 'message' => __( 'There is a problem with the attachment file', 'ips' ) ),
+			30 => array( 'type' => 'error', 'message' => __( 'Unable to reach the Issuu servers', 'ips' ) ),
+			40 => array( 'type' => 'error', 'message' => __( "Unable to reach the Issuu servers. Please check that your PDF file name doesn't include any special characters", 'ips' ) ),
+			50 => array( 'type' => 'error', 'message' => __( 'Issuu error: Invalid API key', 'ips' ) ),
+			51 => array( 'type' => 'error', 'message' => __( 'Issuu error: Bad signature. Please check you API keys', 'ips' ) ),
+			55 => array( 'type' => 'error', 'message' => __( 'Issuu error: Required field is missing', 'ips' ) ),
+			60 => array( 'type' => 'error', 'message' => __( 'Issuu error: Invalid field format', 'ips' ) ),
+			65 => array( 'type' => 'error', 'message' => __( 'Issuu error: Exceeding allowed amount of unlisted publications', 'ips' ) ),
+			70 => array( 'type' => 'error', 'message' => __( 'Issuu error: Exceeding allowed amount of monthly uploads', 'ips' ) ),
+			75 => array( 'type' => 'error', 'message' => __( 'Issuu error: A document already exists on your account with this name', 'ips' ) ),
+			80 => array( 'type' => 'error', 'message' => __( 'Issuu unknown error', 'ips' ) ),
+			90 => array( 'type' => 'error', 'message' => __( 'No PDF ID returned by Issuu', 'ips' ) ),
+			100 => array( 'type' => 'error', 'message' => __( 'Error while trying to get the PDF name', 'ips' ) ),
+			110 => array( 'type' => 'error', 'message' => __( 'Unable to reach the Issuu servers', 'ips' ) ),
+
+			// Success messages
+			500 => array( 'type' => 'success', 'message' => __( 'Your PDF has been sent to Issuu servers', 'ips' ) ),
+			510 => array( 'type' => 'success', 'message' => __( 'Your PDF has been removed from Issuu servers', 'ips' ) ),
+		);
+
 		$this->is = true;
 		return true;
 	}
 
+	/**
+	 * Check if the class initialisation went well.
+	 */
 	public function is() {
 		if ( $this->is === true ) {
 			return true;
@@ -38,11 +66,12 @@ class IPS_Issuu_Api {
 
 	public function send_pdf_to_issuu( $attachment_data = array() ){
 		if ( ! $this->is() ) {
-			return false;
+			return $this->get_message( 10 );
 		}
 
 		if ( ! is_array( $attachment_data ) || empty( $attachment_data ) ) {
-			return false;
+			$this->message_id = __( 'Please check the Issuu options page', 'ips' );
+			return $this->get_message( 20 );
 		}
 
 		// Parameters
@@ -80,30 +109,52 @@ class IPS_Issuu_Api {
 
 		// Check if no sever error
 		if ( is_wp_error( $response ) || isset( $response->errors ) || null == $response ) {
-			return false;
+			return $this->get_message( 30 );
 		}
 		// Decode the Json
 		$response = json_decode( $response['body'] );
-
 		if ( empty( $response) ) {
-			return false;
+			return $this->get_message( 40 );
 		}
 
 		// Check stat of the action
-
 		if ( $response->rsp->stat == 'fail' ) {
-			return false;
+			switch ( $response->rsp->_content->error->code ) {
+				case '010' :
+					return $this->get_message( 50 );
+					break;
+				case '011' :
+					return $this->get_message( 51 );
+					break;
+				case '200' :
+					return $this->get_message( 55 );
+					break;
+				case '201' :
+					return $this->get_message( 60 );
+					break;
+				case '294' :
+					return $this->get_message( 65 );
+					break;
+				case '295' :
+					return $this->get_message( 70 );
+					break;
+				case '302' :
+					return $this->get_message( 75 );
+					break;
+				default :
+					return $this->get_message( 80 );
+			}
 		}
 
 		// Check if the publication id exists
 		if ( ! isset( $response->rsp->_content->document->documentId ) || empty( $response->rsp->_content->document->documentId ) ) {
-			return false;
+			return $this->get_message( 90 );
 		}
 
 		// Update the attachment post meta with the Issuu PDF ID
 		$document = $response->rsp->_content->document;
 
-		return $document;
+		return $this->get_message( 500, $document );
 	}
 
 	public function get_embed_id ( $document_id = '', $params = array() ) {
@@ -147,7 +198,7 @@ class IPS_Issuu_Api {
 		global $ips_options;
 
 		if ( empty( $issuu_pdf_name ) ) {
-			return false;
+			return $this->get_message( 100 );
 		}
 
 		// Prepare the MD5 signature for the Issuu Webservice
@@ -161,21 +212,35 @@ class IPS_Issuu_Api {
 
 		// Check if no sever error
 		if ( is_wp_error( $response ) || isset($response->errors) || null == $response ) {
-			return false;
+			return $this->get_message( 110 );
 		}
 		// Decode the Json
 		$response = json_decode( $response['body'] );
-
 		if ( empty( $response) ) {
-			return false;
+			return $this->get_message( 120 );
 		}
 
 		// Check stat of the action
 		if ( $response->rsp->stat == 'fail' ) {
-			return false;
+			switch ( $response->rsp->_content->error->code ) {
+				case '010' :
+					return $this->get_message( 50 );
+					break;
+				case '011' :
+					return $this->get_message( 51 );
+					break;
+				case '200' :
+					return $this->get_message( 55 );
+					break;
+				case '201' :
+					return $this->get_message( 60 );
+					break;
+				default :
+					return $this->get_message( 80 );
+			}
 		}
 
-		return true;
+		return $this->get_message( 510 );
 
 	}
 
@@ -233,5 +298,31 @@ class IPS_Issuu_Api {
 		}
 
 		return $response->rsp->_content;
+	}
+
+	/**
+	 * Return an error or success message by checking the message class variable
+	 *
+	 * @param $message_code The ID of the message (see the $message variable)
+	 * @param (array) $data: Some extra data returned by the API needed for the next steps
+	 *
+	 * @return (array) the message details
+	 * @author Benjamin Niess
+	 *
+	 */
+	public function get_message( $message_code = 0, $data = false ) {
+		if ( ! isset( $this->messages[ $message_code ] ) ) {
+			return array(
+				'status' => 'error',
+				'code' => 0,
+				'message' => __( 'Unknown error, please contact the administrator', 'ips' )
+			);
+		}
+		return array(
+			'status' => $this->messages[ $message_code ]['type'],
+			'code' => $message_code,
+			'message' => $this->messages[ $message_code ]['message'],
+			'data' => $data,
+		);
 	}
 }

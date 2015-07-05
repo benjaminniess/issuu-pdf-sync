@@ -46,8 +46,7 @@ class IPS_Main {
 
 		return self::sync_pdf( $attachment_id );
 	}
-
-
+	
 	/**
 	 * Init the Issuu API class and send the attachment to Issuu only if it's a PDF
 	 *
@@ -80,15 +79,19 @@ class IPS_Main {
 		);
 
 		$send_to_issuu = $issuu->send_pdf_to_issuu( $parameters );
-		if ( empty( $send_to_issuu ) || ! is_object( $send_to_issuu ) ) {
+		if ( empty( $send_to_issuu ) || ! is_array( $send_to_issuu ) ) {
 			return false;
 		}
 
-		update_post_meta( $attachment_id, 'issuu_pdf_id', $send_to_issuu->documentId );
-		update_post_meta( $attachment_id, 'issuu_pdf_username', $send_to_issuu->username );
-		update_post_meta( $attachment_id, 'issuu_pdf_name', $send_to_issuu->name );
+		if ( ! isset( $send_to_issuu['status'] ) || 'success' != $send_to_issuu['status'] ) {
+			return $send_to_issuu;
+		}
 
-		return $send_to_issuu->documentId;
+		update_post_meta( $attachment_id, 'issuu_pdf_id', $send_to_issuu['data']->documentId );
+		update_post_meta( $attachment_id, 'issuu_pdf_username', $send_to_issuu['data']->username );
+		update_post_meta( $attachment_id, 'issuu_pdf_name', $send_to_issuu['data']->name );
+
+		return $send_to_issuu;
 	}
 
 	/**
@@ -120,8 +123,13 @@ class IPS_Main {
 			return false;
 		}
 
-		if ( ! $issuu->delete_pdf_from_issuu( $issuu_pdf_name ) ) {
+		$delete_from_issuu = $issuu->delete_pdf_from_issuu( $issuu_pdf_name );
+		if ( empty( $delete_from_issuu ) || ! is_array( $delete_from_issuu ) ) {
 			return false;
+		}
+
+		if ( ! isset( $delete_from_issuu['status'] ) || 'success' != $delete_from_issuu['status'] ) {
+			return $delete_from_issuu;
 		}
 
 		// Update the attachment post meta with the Issuu PDF ID
@@ -129,9 +137,8 @@ class IPS_Main {
 		delete_post_meta( $attachment_id, 'issuu_pdf_name' );
 		update_post_meta( $attachment_id, 'disable_auto_upload', 1 );
 
-		return true;
+		return $delete_from_issuu;
 	}
-
 
 	/**
 	 * Load a view depending on its directory (child theme, parent theme or inside this plugin)

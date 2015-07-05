@@ -205,7 +205,7 @@ class IPS_Admin_Main {
 			check_admin_referer( 'issuu_send_' . $_GET['attachment_id'] );
 
 			$sync = IPS_Main::sync_pdf( (int) $_GET['attachment_id'] );
-			echo ( true == $sync ) ? 'true' : 'false';
+			echo json_encode( $sync );
 			exit();
 		} elseif ( 'delete_pdf' == $_GET['action'] ) {
 
@@ -213,7 +213,7 @@ class IPS_Admin_Main {
 			check_admin_referer( 'issuu_delete_' . $_GET['attachment_id'] );
 
 			$sync = IPS_Main::unsync_pdf( (int) $_GET['attachment_id'] );
-			echo ( true == $sync ) ? 'true' : 'false';
+			echo json_encode( $sync );
 			exit();
 		}
 	}
