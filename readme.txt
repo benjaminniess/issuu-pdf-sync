@@ -90,6 +90,7 @@ You need to enable the the embed API in the plugin's settings page
 = 3.1 =
 * Fixed sync error when the PDF file name is to long
 * Fixed conditional logic on template loading
+* Added more detailed error messages on the manual PDF sync button
 * Removed < WP 3.5 code
 * Removed useless queries to Issuu
 * Removed useless extra fields in the media edition screen and add them as static data information
