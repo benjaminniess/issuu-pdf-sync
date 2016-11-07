@@ -3,15 +3,15 @@ Contributors: benjaminniess, momo360modena, pronamic, remcotolsma
 Donate link: http://beapi.fr/donate
 Tags: Issuu, flipbook, PDF, upload, synchronisation, flash, flip, book
 Requires at least: 3.5
-Tested up to: 4.2.2
-Stable tag: 3.1
+Tested up to: 4.7
+Stable tag: 3.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Allow to create PDF Flipbooks with the http://issuu.com service. You just need to get a free key and all your PDF will synchronised on the site. 
-Then you'll be abble to insert flipbooks inside your post without having to quit the WordPress admin pannel.
+Allows to create PDF Flipbooks with the http://issuu.com service. You just need to get a free key and all your PDF will synchronised on the site.
+Then you'll be abble to insert flipbooks inside your posts without having to quit the WordPress admin pannel.
 
 
 == Installation ==
@@ -86,6 +86,12 @@ You need to enable the the embed API in the plugin's settings page
 
 
 == Changelog ==
+
+= 3.1.1 =
+* Minor coding standards review
+* Added some more security escaping checks
+* Tested up to 4.7
+* Added color picker for the old API parameters
 
 = 3.1 =
 * Fixed sync error when the PDF file name is to long
