@@ -32,7 +32,8 @@ class IPS_Admin_Main {
 		wp_enqueue_script( 'jquery' );
 
 		if ( 'options-general.php' === $pagenow ) {
-			wp_enqueue_script( 'ips-admin-main', IPS_URL . '/js/admin-main.js', array( 'jquery' ), '1.0', true );
+			wp_enqueue_script( 'ips-admin-main', IPS_URL . '/js/admin-main.js', array( 'jquery', 'wp-color-picker' ), '1.0', true );
+			wp_enqueue_style( 'wp-color-picker' );
 		}
 	}
 

@@ -79,7 +79,7 @@
 
 			<tr valign="top" class="field old-api">
 				<th class="label" scope="row"><label for="ips[bgcolor]"><span class="alignleft"><?php esc_html_e( 'Background color', 'ips' ); ?></span></label></th>
-				<td># <input id="ips[bgcolor]" style="width:65px;" type="text" maxlength="6" name="ips[bgcolor]" value="<?php echo isset(  $ips_options['bgcolor'] ) ? esc_attr( $ips_options['bgcolor'] ) : ''; ?>" /></td>
+				<td><input id="ips[bgcolor]" style="width:65px;" class="ips-colorp" type="text" maxlength="6" name="ips[bgcolor]" value="<?php echo isset(  $ips_options['bgcolor'] ) ? esc_attr( $ips_options['bgcolor'] ) : ''; ?>" /></td>
 			</tr>
 
 			<tr valign="top" class="field old-api">

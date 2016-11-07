@@ -18,4 +18,6 @@ jQuery(document).ready(function(){
 		}
 
 	}
+
+	jQuery('.ips-colorp').wpColorPicker();
 });
