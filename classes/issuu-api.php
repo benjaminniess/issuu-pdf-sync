@@ -26,25 +26,25 @@ class IPS_Issuu_Api {
 
 		$this->messages = array(
 			// Error messages
-			10 => array( 'type' => 'error', 'message' => __( 'The options page seems to not set correctly', 'ips' ) ),
-			20 => array( 'type' => 'error', 'message' => __( 'There is a problem with the attachment file', 'ips' ) ),
-			30 => array( 'type' => 'error', 'message' => __( 'Unable to reach the Issuu servers', 'ips' ) ),
-			40 => array( 'type' => 'error', 'message' => __( "Unable to reach the Issuu servers. Please check that your PDF file name doesn't include any special characters", 'ips' ) ),
-			50 => array( 'type' => 'error', 'message' => __( 'Issuu error: Invalid API key', 'ips' ) ),
-			51 => array( 'type' => 'error', 'message' => __( 'Issuu error: Bad signature. Please check you API keys', 'ips' ) ),
-			55 => array( 'type' => 'error', 'message' => __( 'Issuu error: Required field is missing', 'ips' ) ),
-			60 => array( 'type' => 'error', 'message' => __( 'Issuu error: Invalid field format', 'ips' ) ),
-			65 => array( 'type' => 'error', 'message' => __( 'Issuu error: Exceeding allowed amount of unlisted publications', 'ips' ) ),
-			70 => array( 'type' => 'error', 'message' => __( 'Issuu error: Exceeding allowed amount of monthly uploads', 'ips' ) ),
-			75 => array( 'type' => 'error', 'message' => __( 'Issuu error: A document already exists on your account with this name', 'ips' ) ),
-			80 => array( 'type' => 'error', 'message' => __( 'Issuu unknown error', 'ips' ) ),
-			90 => array( 'type' => 'error', 'message' => __( 'No PDF ID returned by Issuu', 'ips' ) ),
-			100 => array( 'type' => 'error', 'message' => __( 'Error while trying to get the PDF name', 'ips' ) ),
-			110 => array( 'type' => 'error', 'message' => __( 'Unable to reach the Issuu servers', 'ips' ) ),
+			10 => array( 'type' => 'error', 'message' => esc_html__( 'The options page seems to not set correctly', 'ips' ) ),
+			20 => array( 'type' => 'error', 'message' => esc_html__( 'There is a problem with the attachment file', 'ips' ) ),
+			30 => array( 'type' => 'error', 'message' => esc_html__( 'Unable to reach the Issuu servers', 'ips' ) ),
+			40 => array( 'type' => 'error', 'message' => esc_html__( "Unable to reach the Issuu servers. Please check that your PDF file name doesn't include any special characters", 'ips' ) ),
+			50 => array( 'type' => 'error', 'message' => esc_html__( 'Issuu error: Invalid API key', 'ips' ) ),
+			51 => array( 'type' => 'error', 'message' => esc_html__( 'Issuu error: Bad signature. Please check you API keys', 'ips' ) ),
+			55 => array( 'type' => 'error', 'message' => esc_html__( 'Issuu error: Required field is missing', 'ips' ) ),
+			60 => array( 'type' => 'error', 'message' => esc_html__( 'Issuu error: Invalid field format', 'ips' ) ),
+			65 => array( 'type' => 'error', 'message' => esc_html__( 'Issuu error: Exceeding allowed amount of unlisted publications', 'ips' ) ),
+			70 => array( 'type' => 'error', 'message' => esc_html__( 'Issuu error: Exceeding allowed amount of monthly uploads', 'ips' ) ),
+			75 => array( 'type' => 'error', 'message' => esc_html__( 'Issuu error: A document already exists on your account with this name', 'ips' ) ),
+			80 => array( 'type' => 'error', 'message' => esc_html__( 'Issuu unknown error', 'ips' ) ),
+			90 => array( 'type' => 'error', 'message' => esc_html__( 'No PDF ID returned by Issuu', 'ips' ) ),
+			100 => array( 'type' => 'error', 'message' => esc_html__( 'Error while trying to get the PDF name', 'ips' ) ),
+			110 => array( 'type' => 'error', 'message' => esc_html__( 'Unable to reach the Issuu servers', 'ips' ) ),
 
 			// Success messages
-			500 => array( 'type' => 'success', 'message' => __( 'Your PDF has been sent to Issuu servers', 'ips' ) ),
-			510 => array( 'type' => 'success', 'message' => __( 'Your PDF has been removed from Issuu servers', 'ips' ) ),
+			500 => array( 'type' => 'success', 'message' => esc_html__( 'Your PDF has been sent to Issuu servers', 'ips' ) ),
+			510 => array( 'type' => 'success', 'message' => esc_html__( 'Your PDF has been removed from Issuu servers', 'ips' ) ),
 		);
 
 		$this->is = true;
@@ -70,7 +70,7 @@ class IPS_Issuu_Api {
 		}
 
 		if ( ! is_array( $attachment_data ) || empty( $attachment_data ) ) {
-			$this->message_id = __( 'Please check the Issuu options page', 'ips' );
+			$this->message_id = esc_html__( 'Please check the Issuu options page', 'ips' );
 			return $this->get_message( 20 );
 		}
 
@@ -315,7 +315,7 @@ class IPS_Issuu_Api {
 			return array(
 				'status' => 'error',
 				'code' => 0,
-				'message' => __( 'Unknown error, please contact the administrator', 'ips' )
+				'message' => esc_html__( 'Unknown error, please contact the administrator', 'ips' )
 			);
 		}
 		return array(

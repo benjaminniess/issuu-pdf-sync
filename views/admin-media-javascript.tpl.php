@@ -12,18 +12,18 @@
 		// Sending PDF
 		jQuery('#admin_send_pdf a').click(function( e ) {
 			e.preventDefault();
-			if( !window.confirm( '<?php echo esc_js( __( 'Are you sure you want to send this PDF on Issuu ?', 'ips' ) ); ?>' ) ){
+			if( !window.confirm( '<?php echo esc_js( esc_html__( 'Are you sure you want to send this PDF on Issuu ?', 'ips' ) ); ?>' ) ){
 				return false;
 			}
-			jQuery('#admin_send_pdf').html('<img src="<?php echo admin_url( 'images/wpspin_light.gif' ); ?>" /> <?php _e( 'Loading', 'ips' ); ?>...');
+			jQuery('#admin_send_pdf').html('<img src="<?php echo admin_url( 'images/wpspin_light.gif' ); ?>" /> <?php esc_html_e( 'Loading', 'ips' ); ?>...');
 			jQuery('#admin_send_pdf').css( 'color', '#000000');
 			jQuery.get('<?php echo str_replace( '&amp;', '&', wp_nonce_url( admin_url( 'media.php?attachment_id=' . $_GET['attachment_id'] . '&amp;action=send_pdf' ), 'issuu_send_' . $_GET['attachment_id'] ) ); ?>', function(data) {
 
 				if ( data == false ){
-					jQuery('#admin_send_pdf').html('<?php echo esc_js( __( 'An error occured during synchronisation with Issuu', 'ips' ) ); ?>');
+					jQuery('#admin_send_pdf').html('<?php echo esc_js( esc_html__( 'An error occured during synchronisation with Issuu', 'ips' ) ); ?>');
 					jQuery('#admin_send_pdf').css( 'color', '#AA0000');
 				}else {
-					jQuery('#admin_send_pdf').html('<?php echo esc_js( __( 'Your PDF is now on Issuu !', 'ips' ) ); ?>');
+					jQuery('#admin_send_pdf').html('<?php echo esc_js( esc_html__( 'Your PDF is now on Issuu !', 'ips' ) ); ?>');
 					jQuery('#admin_send_pdf').css( 'color', '#00AA00');
 				};
 			});
@@ -32,7 +32,7 @@
 		// Deleting PDF
 		jQuery('#admin_delete_pdf a').click(function( e ) {
 			e.preventDefault();
-			if( !window.confirm( '<?php echo esc_js( __( 'Are you sure you want to delete this PDF from Issuu ?', 'ips' ) ); ?>' ) ){
+			if( !window.confirm( '<?php echo esc_js( esc_html__( 'Are you sure you want to delete this PDF from Issuu ?', 'ips' ) ); ?>' ) ){
 				return false;
 			}
 			jQuery('#admin_delete_pdf').html('<img src="<?php echo admin_url( 'images/wpspin_light.gif' ); ?>" /> <?php esc_attr_e( 'Loading', 'ips' ); ?>...');
@@ -40,10 +40,10 @@
 			jQuery.get('<?php echo str_replace( '&amp;', '&', wp_nonce_url( admin_url( 'media.php?attachment_id=' . $_GET['attachment_id'] . '&amp;action=delete_pdf' ), 'issuu_delete_' . $_GET['attachment_id'] ) ); ?>', function(data) {
 
 				if ( data == true ){
-					jQuery('#admin_delete_pdf').html('<?php echo esc_js( __( 'Your PDF has been successfuly deleted', 'ips' ) ); ?>');
+					jQuery('#admin_delete_pdf').html('<?php echo esc_js( esc_html__( 'Your PDF has been successfuly deleted', 'ips' ) ); ?>');
 					jQuery('#admin_delete_pdf').css( 'color', '#00AA00');
 				}else {
-					jQuery('#admin_delete_pdf').html('<?php echo esc_js( __( 'An error occured during PDF deletion', 'ips' ) ); ?>');
+					jQuery('#admin_delete_pdf').html('<?php echo esc_js( esc_html__( 'An error occured during PDF deletion', 'ips' ) ); ?>');
 					jQuery('#admin_delete_pdf').css( 'color', '#AA0000');
 				};
 			});

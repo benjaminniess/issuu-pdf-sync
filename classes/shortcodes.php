@@ -54,7 +54,7 @@ class IPS_Shortcodes {
 			'documentId' => $issuu_pdf_id,
 			'autoFlipTime' => $autoFlipTime,
 			'autoFlip' => $autoFlip,
-			'loadingInfoText' => __( 'Loading...', 'ips' ),
+			'loadingInfoText' => esc_html__( 'Loading...', 'ips' ),
 		);
 
 		if ( isset( $customLayout ) && ! empty( $customLayout ) ) {

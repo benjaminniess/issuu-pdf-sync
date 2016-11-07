@@ -40,7 +40,7 @@ class IPS_Admin_Main {
 	 * Register the WordPress options page
 	 */
 	public static function add_plugin_menu() {
-		add_options_page( __( 'Options for Issuu PDF Sync', 'ips' ), __( 'Issuu PDF Sync', 'ips' ), 'manage_options', 'ips-options', array( __CLASS__, 'display_options' ) );
+		add_options_page( esc_html__( 'Options for Issuu PDF Sync', 'ips' ), esc_html__( 'Issuu PDF Sync', 'ips' ), 'manage_options', 'ips-options', array( __CLASS__, 'display_options' ) );
 	}
 
 	/**
@@ -120,16 +120,16 @@ class IPS_Admin_Main {
 
 		// The extra data array just for debugging info
 		$pdf_data = array(
-			'issuu_pdf_sync_id' => array( 'name' => __( 'Issuu PDF ID', 'ips' ), 'value' => $issuu_pdf_id ),
-			'issuu_pdf_username' => array( 'name' => __( 'Issuu PDF username', 'ips' ), 'value' => $issuu_pdf_username ),
-			'issuu_pdf_name' => array( 'name' => __( 'Issuu PDF file name', 'ips' ), 'value' => $issuu_pdf_name ),
-			'issuu_pdf_url' => array( 'name' => __( 'Issuu PDF URL', 'ips' ), 'value' => $issuu_url ),
+			'issuu_pdf_sync_id' => array( 'name' => esc_html__( 'Issuu PDF ID', 'ips' ), 'value' => $issuu_pdf_id ),
+			'issuu_pdf_username' => array( 'name' => esc_html__( 'Issuu PDF username', 'ips' ), 'value' => $issuu_pdf_username ),
+			'issuu_pdf_name' => array( 'name' => esc_html__( 'Issuu PDF file name', 'ips' ), 'value' => $issuu_pdf_name ),
+			'issuu_pdf_url' => array( 'name' => esc_html__( 'Issuu PDF URL', 'ips' ), 'value' => $issuu_url ),
 		);
 
 		// The Issuu sync/unsync link
 		$form_fields['issuu_pdf_sync'] = array(
 			'show_in_edit'   => true,
-			'label'          => __( 'Issuu PDF Sync', 'ips' ),
+			'label'          => esc_html__( 'Issuu PDF Sync', 'ips' ),
 			'input'          => 'issuu_pdf_sync',
 			'issuu_pdf_sync' => self::get_sync_input( $attachment->ID, $pdf_data )
 		);
@@ -140,7 +140,7 @@ class IPS_Admin_Main {
 					'show_in_edit' => true,
 					'label' => $field['name'],
 					'input' => $field_key,
-					$field_key => ! empty( $field['value'] ) ? $field['value'] : __( 'Empty', 'ips' ),
+					$field_key => ! empty( $field['value'] ) ? $field['value'] : esc_html__( 'Empty', 'ips' ),
 				);
 			}
 		}
