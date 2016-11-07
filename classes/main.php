@@ -40,7 +40,7 @@ class IPS_Main {
 		}
 
 		// Upload the PDF to Issuu if necessary and if the Auto upload feature is enabled
-		if ( ! isset( $ips_options['auto_upload'] ) || 1 != $ips_options['auto_upload'] ) {
+		if ( ! isset( $ips_options['auto_upload'] ) || 1 !== (int) $ips_options['auto_upload'] ) {
 			return false;
 		}
 
@@ -62,7 +62,7 @@ class IPS_Main {
 		$attachment = get_post( $attachment_id );
 
 		// Check if the attachment exists and is a PDF file
-		if ( is_wp_error( $attachment ) || ! isset( $attachment->post_mime_type ) || $attachment->post_mime_type != 'application/pdf' || ! isset( $attachment->guid ) || empty ( $attachment->guid ) ) {
+		if ( is_wp_error( $attachment ) || ! isset( $attachment->post_mime_type ) ||  'application/pdf' !== $attachment->post_mime_type || ! isset( $attachment->guid ) || empty ( $attachment->guid ) ) {
 			return false;
 		}
 
@@ -75,7 +75,7 @@ class IPS_Main {
 		$parameters = array(
 			'name'     => $attachment->post_name,
 			'slurpUrl' => $attachment->guid,
-			'title'    => sanitize_title( $attachment->post_title )
+			'title'    => sanitize_title( $attachment->post_title ),
 		);
 
 		$send_to_issuu = $issuu->send_pdf_to_issuu( $parameters );
@@ -83,7 +83,7 @@ class IPS_Main {
 			return false;
 		}
 
-		if ( ! isset( $send_to_issuu['status'] ) || 'success' != $send_to_issuu['status'] ) {
+		if ( ! isset( $send_to_issuu['status'] ) || 'success' !== $send_to_issuu['status'] ) {
 			return $send_to_issuu;
 		}
 
@@ -100,7 +100,7 @@ class IPS_Main {
 	 * @param int $attachment_id
 	 * @return bool
 	 */
-	public static function unsync_pdf( $attachment_id = 0 ){
+	public static function unsync_pdf( $attachment_id = 0 ) {
 		if ( 0 >= (int) $attachment_id ) {
 			return false;
 		}
@@ -109,7 +109,7 @@ class IPS_Main {
 		$attachment = get_post( $attachment_id );
 
 		// Check if the attachment exists and is a PDF file
-		if ( ! isset( $attachment->post_mime_type ) || $attachment->post_mime_type != 'application/pdf' || ! isset( $attachment->guid ) || empty ( $attachment->guid ) ) {
+		if ( ! isset( $attachment->post_mime_type ) || 'application/pdf' !== $attachment->post_mime_type || ! isset( $attachment->guid ) || empty ( $attachment->guid ) ) {
 			return false;
 		}
 
@@ -128,7 +128,7 @@ class IPS_Main {
 			return false;
 		}
 
-		if ( ! isset( $delete_from_issuu['status'] ) || 'success' != $delete_from_issuu['status'] ) {
+		if ( ! isset( $delete_from_issuu['status'] ) || 'success' !== $delete_from_issuu['status'] ) {
 			return $delete_from_issuu;
 		}
 

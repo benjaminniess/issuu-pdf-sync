@@ -28,7 +28,7 @@
 					<td><input id="ips_height" type="number" min="0" max="2000" name="ips_height" value="<?php echo isset(  $ips_options['height'] ) ? (int) $ips_options['height'] : ''; ?>" /> px</td>
 				</tr>
 
-				<?php if ( 'old' == $api_version ) : ?>
+				<?php if ( 'old' === $api_version ) : ?>
 					<tr valign="top" class="field">
 						<th class="label" scope="row"><label for="ips_layout"><span class="alignleft"><?php esc_html_e( 'Layout', 'ips' ); ?></span></label></th>
 						<td>
@@ -39,7 +39,7 @@
 
 					<tr valign="top" class="field">
 						<th class="label" scope="row"><label for="ips_bgcolor"><span class="alignleft"><?php esc_html_e( 'Background color', 'ips' ); ?></span></label></th>
-						<td># <input id="ips_bgcolor" style="width:65px;" type="text" maxlength="6" name="ips_bgcolor" value="<?php echo isset(  $ips_options['bgcolor'] ) ? $ips_options['bgcolor'] : ''; ?>" /></td>
+						<td># <input id="ips_bgcolor" style="width:65px;" type="text" maxlength="6" name="ips_bgcolor" value="<?php echo isset(  $ips_options['bgcolor'] ) ? esc_attr( $ips_options['bgcolor'] ) : ''; ?>" /></td>
 					</tr>
 
 					<tr valign="top" class="field">

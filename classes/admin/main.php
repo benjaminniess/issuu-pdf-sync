@@ -8,7 +8,7 @@ class IPS_Admin_Main {
 		add_filter( 'attachment_fields_to_edit', array( __CLASS__, 'insert_ips_sync_link' ), 10, 2 );
 		add_filter( 'media_send_to_editor', array( __CLASS__, 'send_to_editor' ) );
 
-		if ( 'media.php' == $pagenow ) {
+		if ( 'media.php' === $pagenow ) {
 			add_action( 'admin_head', array( __CLASS__, 'edit_media_js' ), 50 );
 		}
 
@@ -31,7 +31,7 @@ class IPS_Admin_Main {
 
 		wp_enqueue_script( 'jquery' );
 
-		if ( 'options-general.php' == $pagenow ) {
+		if ( 'options-general.php' === $pagenow ) {
 			wp_enqueue_script( 'ips-admin-main', IPS_URL . '/js/admin-main.js', array( 'jquery' ), '1.0', true );
 		}
 	}
@@ -65,10 +65,10 @@ class IPS_Admin_Main {
 		}
 
 		if ( isset($_POST['save']) ) {
-			echo '<div class="message updated"><p>'.__( 'Options updated!', 'ips' ).'</p></div>';
+			echo '<div class="message updated"><p>'. esc_html__( 'Options updated!', 'ips' ).'</p></div>';
 		}
 
-		if ( false == $ips_options  ) {
+		if ( empty( $ips_options ) ) {
 			$ips_options = array();
 		}
 
@@ -100,13 +100,13 @@ class IPS_Admin_Main {
 		}
 
 		// Only add the extra button if the attachment is a PDF file
-		if ( $attachment->post_mime_type != 'application/pdf' ) {
+		if ( 'application/pdf' !== $attachment->post_mime_type ) {
 			return $form_fields;
 		}
 
 		// Allow plugin to stop the auto-insertion
 		$check = apply_filters( 'insert-ips-button', true, $attachment, $form_fields );
-		if ( true != $check  ) {
+		if ( true !== (bool) $check  ) {
 			return $form_fields;
 		}
 
@@ -131,7 +131,7 @@ class IPS_Admin_Main {
 			'show_in_edit'   => true,
 			'label'          => esc_html__( 'Issuu PDF Sync', 'ips' ),
 			'input'          => 'issuu_pdf_sync',
-			'issuu_pdf_sync' => self::get_sync_input( $attachment->ID, $pdf_data )
+			'issuu_pdf_sync' => self::get_sync_input( $attachment->ID, $pdf_data ),
 		);
 
 		if ( ! empty( $issuu_pdf_id ) ) {
@@ -195,25 +195,25 @@ class IPS_Admin_Main {
      * @return true | false
      * @author Benjamin Niess
 	 */
-	public static function check_js_pdf_edition(){
-		if ( ! isset( $_GET['attachment_id'] ) || 0 == (int) $_GET['attachment_id'] || ! isset( $_GET['action'] ) || empty( $_GET['action'] ) ) {
+	public static function check_js_pdf_edition() {
+		if ( ! isset( $_GET['attachment_id'] ) || 0 === (int) $_GET['attachment_id'] || ! isset( $_GET['action'] ) || empty( $_GET['action'] ) ) {
 			return false;
 		}
 
-		if ( 'send_pdf' == $_GET['action'] ) {
+		if ( 'send_pdf' === $_GET['action'] ) {
 			//check if the nonce is correct
 			check_admin_referer( 'issuu_send_' . $_GET['attachment_id'] );
 
 			$sync = IPS_Main::sync_pdf( (int) $_GET['attachment_id'] );
-			echo json_encode( $sync );
+			echo wp_json_encode( $sync );
 			exit();
-		} elseif ( 'delete_pdf' == $_GET['action'] ) {
+		} elseif ( 'delete_pdf' === $_GET['action'] ) {
 
 			//check if the nonce is correct
 			check_admin_referer( 'issuu_delete_' . $_GET['attachment_id'] );
 
 			$sync = IPS_Main::unsync_pdf( (int) $_GET['attachment_id'] );
-			echo json_encode( $sync );
+			echo wp_json_encode( $sync );
 			exit();
 		}
 	}
@@ -222,7 +222,7 @@ class IPS_Admin_Main {
      * Print some JS code for the media.php page (for PDFs only)
      * @author Benjamin Niess
 	 */
-	public static function edit_media_js(){
+	public static function edit_media_js() {
 		global $ips_options;
 
 		if ( ! isset( $_GET['attachment_id'] ) || (int) $_GET['attachment_id'] <= 0 || ! isset( $ips_options['issuu_api_key'] ) || empty( $ips_options['issuu_api_key'] ) || ! isset( $ips_options['issuu_secret_key'] ) || empty( $ips_options['issuu_secret_key'] ) ) {
@@ -233,7 +233,7 @@ class IPS_Admin_Main {
 		$post_data = get_post( $_GET['attachment_id'] );
 
 		// Check if the attachment exists and is a PDF file
-		if ( ! isset( $post_data->post_mime_type ) || $post_data->post_mime_type != 'application/pdf' || ! isset( $post_data->guid ) || empty ( $post_data->guid ) ) {
+		if ( ! isset( $post_data->post_mime_type ) || 'application/pdf' !== $post_data->post_mime_type || ! isset( $post_data->guid ) || empty ( $post_data->guid ) ) {
 			return false;
 		}
 
@@ -253,7 +253,7 @@ class IPS_Admin_Main {
      *
      * @author Benjamin Niess
 	 */
-	public static function wp_ajax_fct(){
+	public static function wp_ajax_fct() {
 		global $ips_options, $wp_styles;
 
 		$pdf_files = new WP_Query( array(
@@ -266,7 +266,7 @@ class IPS_Admin_Main {
 					'value'   => '',
 					'compare' => '!=',
 				),
-			)
+			),
 		) );
 
 		if ( ! empty($wp_styles->concat) ) {
@@ -288,7 +288,7 @@ class IPS_Admin_Main {
 			return false;
 		}
 
-		$api_version = ( isset( $ips_options['new_api_version'] ) && '1' == $ips_options['new_api_version'] ) ? 'new' : 'old';
+		$api_version = ( isset( $ips_options['new_api_version'] ) && 1 === (int) $ips_options['new_api_version'] ) ? 'new' : 'old';
 
 		include ( $tpl );
 		exit();
@@ -307,11 +307,11 @@ class IPS_Admin_Main {
 			return false; }
 
 		// Does the admin want to display the Issuu button ?
-		if ( ! isset( $ips_options['add_ips_button'] ) || 1 != (int) $ips_options['add_ips_button'] ) {
+		if ( ! isset( $ips_options['add_ips_button'] ) || 1 !== (int) $ips_options['add_ips_button'] ) {
 			return false;
 		}
 
-		if ( get_user_option( 'rich_editing' ) == 'true' ) {
+		if ( true === (bool) get_user_option( 'rich_editing' ) ) {
 			add_filter( 'mce_external_plugins', array( __CLASS__, 'add_script_tinymce' ) );
 			add_filter( 'mce_buttons', array( __CLASS__, 'register_the_button' ) );
 		}
@@ -322,7 +322,7 @@ class IPS_Admin_Main {
      *ter
      * @author Benjamin Niess
 	 */
-	public static function register_the_button($buttons) {
+	public static function register_the_button( $buttons ) {
 		array_push( $buttons, '|', 'ips' );
 		return $buttons;
 	}
@@ -332,7 +332,7 @@ class IPS_Admin_Main {
      *
      * @author Benjamin Niess
 	 */
-	public static function add_script_tinymce($plugin_array) {
+	public static function add_script_tinymce( $plugin_array ) {
 		$plugin_array['ips'] = IPS_URL . '/js/tinymce.js';
 		return $plugin_array;
 	}

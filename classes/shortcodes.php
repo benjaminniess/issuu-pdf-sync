@@ -8,10 +8,10 @@ class IPS_Shortcodes {
 	/**
 	 * The ISSUU PDF shortcode. Usage doc on the admin pannel
 	 */
-	public static function issuu_pdf_embeder($atts, $content = null) {
+	public static function issuu_pdf_embeder( $atts, $content = null ) {
 		global $ips_options;
 
-		if ( isset( $ips_options['new_api_version'] ) && '1' == $ips_options['new_api_version'] ) {
+		if ( isset( $ips_options['new_api_version'] ) && 1 === (int) $ips_options['new_api_version'] ) {
 			return self::shortcode_new_api( $atts );
 		} else {
 			return self::shortcode_old_api( $atts );
@@ -21,7 +21,7 @@ class IPS_Shortcodes {
 	public static function shortcode_old_api( $atts = array() ) {
 		global $ips_options;
 
-		if ( isset( $ips_options['layout'] ) && 2 == $ips_options['layout'] ) {
+		if ( isset( $ips_options['layout'] ) && 2 === (int) $ips_options['layout'] ) {
 			$layout = 'presentation';
 		} else {
 			$layout = 'browsing';
@@ -34,10 +34,10 @@ class IPS_Shortcodes {
 			'layout' => $layout,
 			'backgroundColor' => $ips_options['bgcolor'],
 			'autoFlipTime' => $ips_options['flip_timelaps'],
-			'autoFlip' => ( isset($ips_options['autoflip']) && 1 == $ips_options['autoflip'] ) ? 'true' : 'false',
-			'showFlipBtn' => ( isset($ips_options['show_flip_buttons']) && 1 == $ips_options['show_flip_buttons'] ) ? 'true' : 'false',
-			'allowfullscreen' => ( isset($ips_options['allow_full_screen']) && 1 == $ips_options['allow_full_screen'] ) ? 'true' : 'false',
-			'customLayout' => ( isset($ips_options['custom_layout']) && 'default' != $ips_options['custom_layout'] ) ? $ips_options['custom_layout'] : false
+			'autoFlip' => ( isset($ips_options['autoflip']) && 1 === (int) $ips_options['autoflip'] ) ? 'true' : 'false',
+			'showFlipBtn' => ( isset($ips_options['show_flip_buttons']) && 1 === (int) $ips_options['show_flip_buttons'] ) ? 'true' : 'false',
+			'allowfullscreen' => ( isset($ips_options['allow_full_screen']) && 1 === (int) $ips_options['allow_full_screen'] ) ? 'true' : 'false',
+			'customLayout' => ( isset($ips_options['custom_layout']) && 'default' !== $ips_options['custom_layout'] ) ? $ips_options['custom_layout'] : false,
 		), $atts));
 
 		// Check if the required param is set
@@ -94,10 +94,10 @@ class IPS_Shortcodes {
 		<div>
 			<object style="<?php echo esc_attr( $style ); ?>" >
 				<param name="movie" value="<?php echo esc_attr( $issuu_swf_url ); ?>" />
-				<param name="allowfullscreen" value="<?php echo $allowfullscreen; ?>" />
+				<param name="allowfullscreen" value="<?php echo esc_attr( $allowfullscreen ); ?>" />
 				<param name="wmode" value="transparent" />
 				<param name="menu" value="false" />
-				<embed src="http://static.issuu.com/webembed/viewers/style1/v1/IssuuViewer.swf" <?php echo $layout_embed; ?> type="application/x-shockwave-flash" allowfullscreen="<?php echo $allowfullscreen; ?>" wmode="transparent" menu="false" style="<?php echo esc_attr( $style ); ?>" flashvars="<?php echo esc_attr( $flashvars ); ?>" />
+				<embed src="http://static.issuu.com/webembed/viewers/style1/v1/IssuuViewer.swf" <?php echo esc_attr( $layout_embed ); ?> type="application/x-shockwave-flash" allowfullscreen="<?php echo esc_attr( $allowfullscreen ); ?>" wmode="transparent" menu="false" style="<?php echo esc_attr( $style ); ?>" flashvars="<?php echo esc_attr( $flashvars ); ?>" />
 			</object>
 		</div>
 
@@ -114,7 +114,7 @@ class IPS_Shortcodes {
 
 	public static function shortcode_new_api( $atts = array() ) {
 		global $ips_options;
-		
+
 		extract(shortcode_atts( array(
 			'issuu_pdf_id' => null,
 			'width' => $ips_options['width'],

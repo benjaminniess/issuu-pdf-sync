@@ -55,7 +55,7 @@ class IPS_Issuu_Api {
 	 * Check if the class initialisation went well.
 	 */
 	public function is() {
-		if ( $this->is === true ) {
+		if ( true === (bool) $this->is ) {
 			return true;
 		}
 
@@ -64,7 +64,7 @@ class IPS_Issuu_Api {
 
 
 
-	public function send_pdf_to_issuu( $attachment_data = array() ){
+	public function send_pdf_to_issuu( $attachment_data = array() ) {
 		if ( ! $this->is() ) {
 			return $this->get_message( 10 );
 		}
@@ -108,7 +108,7 @@ class IPS_Issuu_Api {
 		$response = wp_remote_get( $url_to_call, array( 'timeout' => 25 ) );
 
 		// Check if no sever error
-		if ( is_wp_error( $response ) || isset( $response->errors ) || null == $response ) {
+		if ( is_wp_error( $response ) || isset( $response->errors ) || null === $response ) {
 			return $this->get_message( 30 );
 		}
 		// Decode the Json
@@ -118,7 +118,7 @@ class IPS_Issuu_Api {
 		}
 
 		// Check stat of the action
-		if ( $response->rsp->stat == 'fail' ) {
+		if ( 'fail' === $response->rsp->stat ) {
 			switch ( $response->rsp->_content->error->code ) {
 				case '010' :
 					return $this->get_message( 50 );
@@ -157,7 +157,7 @@ class IPS_Issuu_Api {
 		return $this->get_message( 500, $document );
 	}
 
-	public function get_embed_id ( $document_id = '', $params = array() ) {
+	public function get_embed_id( $document_id = '', $params = array() ) {
 		if ( ! $this->is() ) {
 			return false;
 		}
@@ -194,7 +194,7 @@ class IPS_Issuu_Api {
      * @return true | false
      * @author Benjamin Niess
      */
-	public function delete_pdf_from_issuu( $issuu_pdf_name = '' ){
+	public function delete_pdf_from_issuu( $issuu_pdf_name = '' ) {
 		global $ips_options;
 
 		if ( empty( $issuu_pdf_name ) ) {
@@ -211,7 +211,7 @@ class IPS_Issuu_Api {
 		$response = wp_remote_get( $url_to_call, array( 'timeout' => 25 ) );
 
 		// Check if no sever error
-		if ( is_wp_error( $response ) || isset($response->errors) || null == $response ) {
+		if ( is_wp_error( $response ) || isset( $response->errors ) || null === $response ) {
 			return $this->get_message( 110 );
 		}
 		// Decode the Json
@@ -221,7 +221,7 @@ class IPS_Issuu_Api {
 		}
 
 		// Check stat of the action
-		if ( $response->rsp->stat == 'fail' ) {
+		if ( 'fail' === $response->rsp->stat ) {
 			switch ( $response->rsp->_content->error->code ) {
 				case '010' :
 					return $this->get_message( 50 );
@@ -244,7 +244,7 @@ class IPS_Issuu_Api {
 
 	}
 
-	private function call_issuu_api ( $custom_parameters = array() ) {
+	private function call_issuu_api( $custom_parameters = array() ) {
 		$access = 'public';
 		if ( isset( $ips_options['access'] ) ) {
 			$access = $ips_options['access'];
@@ -278,11 +278,11 @@ class IPS_Issuu_Api {
 		// Cath the response
 		$response = wp_remote_get( $url_to_call, array( 'timeout' => 25 ) );
 		// Check if no sever error
-		if ( is_wp_error( $response ) || isset($response->errors) || null == $response ) {
+		if ( is_wp_error( $response ) || isset( $response->errors ) || null === $response ) {
 			return false;
 		}
 		// Decode the Json
-		if ( 'issuu.document_embed.get_html_code' == $parameters['action'] ) {
+		if ( 'issuu.document_embed.get_html_code' === $parameters['action'] ) {
 			return $response['body'];
 		}
 
@@ -293,7 +293,7 @@ class IPS_Issuu_Api {
 		}
 
 		// Check stat of the action
-		if ( $response->rsp->stat == 'fail' ) {
+		if ( 'fail' === $response->rsp->stat ) {
 			return false;
 		}
 
@@ -315,7 +315,7 @@ class IPS_Issuu_Api {
 			return array(
 				'status' => 'error',
 				'code' => 0,
-				'message' => esc_html__( 'Unknown error, please contact the administrator', 'ips' )
+				'message' => esc_html__( 'Unknown error, please contact the administrator', 'ips' ),
 			);
 		}
 		return array(

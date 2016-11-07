@@ -8,7 +8,7 @@
 
 			printf(
 				'<a href="#" style="color:#BC0B0B;">%s</a>',
-				__( 'Click here to delete this PDF from Issuu', 'ips' )
+				esc_html__( 'Click here to delete this PDF from Issuu', 'ips' )
 			);
 
 			?>
@@ -24,7 +24,7 @@
 
 		printf(
 			'<a href="#">%s</a>',
-			__( 'Click here to send this PDF to Issuu', 'ips' )
+			esc_html__( 'Click here to send this PDF to Issuu', 'ips' )
 		);
 
 		?>
@@ -43,7 +43,7 @@
 			}
 			jQuery('#admin_send_pdf').html('<img src="<?php echo admin_url( 'images/wpspin_light.gif' ); ?>" /> <?php esc_html_e( 'Loading', 'ips' ); ?>...');
 			jQuery('#admin_send_pdf').css( 'color', '#000000');
-			jQuery.get('<?php echo str_replace( '&amp;', '&', wp_nonce_url( admin_url( 'media.php?attachment_id=' . $attachment_id . '&amp;action=send_pdf' ), 'issuu_send_' . $attachment_id ) ); ?>', function(data) {
+			jQuery.get('<?php echo str_replace( '&amp;', '&', wp_nonce_url( admin_url( 'media.php?attachment_id=' . (int) $attachment_id . '&amp;action=send_pdf' ), 'issuu_send_' . (int) $attachment_id ) ); ?>', function(data) {
 				data_obj = JSON.parse( data );
 				if ( data_obj.status == 'error' ) {
 					jQuery('#admin_send_pdf').html( data_obj.message + ' (err ' + data_obj.code + ')' );
@@ -68,7 +68,7 @@
 			}
 			jQuery('#admin_delete_pdf').html('<img src="<?php echo admin_url( 'images/wpspin_light.gif' ); ?>" /> <?php esc_attr_e( 'Loading', 'ips' ); ?>...');
 			jQuery('#admin_delete_pdf').css( 'color', '#000000');
-			jQuery.get('<?php echo str_replace( '&amp;', '&', wp_nonce_url( admin_url( 'media.php?attachment_id=' . $attachment_id . '&amp;action=delete_pdf' ), 'issuu_delete_' . $attachment_id ) ); ?>', function(data) {
+			jQuery.get('<?php echo str_replace( '&amp;', '&', wp_nonce_url( admin_url( 'media.php?attachment_id=' . (int) $attachment_id . '&amp;action=delete_pdf' ), 'issuu_delete_' . (int) $attachment_id ) ); ?>', function(data) {
 
 				data_obj = JSON.parse( data );
 				if ( data_obj.status == 'error' ) {

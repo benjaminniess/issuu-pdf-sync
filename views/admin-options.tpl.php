@@ -43,7 +43,7 @@
 			<tr valign="top" class="field">
 				<th class="label" scope="row"><label for="ips[new_api_version]"><span class="alignleft"><?php esc_html_e( 'API version', 'ips' ); ?></span></label></th>
 				<td>
-					<p style="height:25px;"><input id="ips-new-api-version" type="checkbox" name="ips[new_api_version]" value="1" <?php checked( ( isset( $ips_options['new_api_version'] ) && 1 == (int) $ips_options['new_api_version'] ) ? 1 : 0 , 1 ); ?> /> <label for="ips-new-api-version"><?php esc_html_e( 'Use the new Issuu API', 'ips' ); ?></label></p>
+					<p style="height:25px;"><input id="ips-new-api-version" type="checkbox" name="ips[new_api_version]" value="1" <?php checked( ( isset( $ips_options['new_api_version'] ) && 1 === (int) $ips_options['new_api_version'] ) ? 1 : 0 , 1 ); ?> /> <label for="ips-new-api-version"><?php esc_html_e( 'Use the new Issuu API', 'ips' ); ?></label></p>
 					<p><?php esc_html_e( 'The new Issuu API has less customization params than the old one but it works on mobiles and tablets. The old API let you customize more options but works on desktop only.', 'ips' ); ?></p>
 				</td>
 			</tr>
@@ -59,10 +59,10 @@
 			<tr valign="top" class="field old-api">
 				<th class="label" scope="row"><label for="ips[custom_layout]"><span class="alignleft"><?php esc_html_e( 'Custom layout', 'ips' ); ?></span></label></th>
 				<td>
-					<p style="height:150px;"><input id="ips-custom-layout-default" type="radio" name="ips[custom_layout]" value="default" <?php checked( ! isset( $ips_options['custom_layout'] ) || 'default' == $ips_options['custom_layout'] ? true : false, true ); ?> /> <label for="ips-custom-layout-default"><?php esc_html_e( 'Default', 'ips' ); ?></label><br /><img src="<?php echo IPS_URL . '/images/default.png' ; ?>" height="100" style="margin-left:15px;" /></p>
+					<p style="height:150px;"><input id="ips-custom-layout-default" type="radio" name="ips[custom_layout]" value="default" <?php checked( ! isset( $ips_options['custom_layout'] ) || 'default' === $ips_options['custom_layout'] ? true : false, true ); ?> /> <label for="ips-custom-layout-default"><?php esc_html_e( 'Default', 'ips' ); ?></label><br /><img src="<?php echo IPS_URL . '/images/default.png' ; ?>" height="100" style="margin-left:15px;" /></p>
 					<?php $skins = array( 'basicBlue', 'crayon', 'whiteMenu' );
 					foreach ( $skins as $skin ) : ?>
-						<p><input type="radio" id="ips-custom-layout-<?php echo $skin; ?>" name="ips[custom_layout]" value="<?php echo $skin; ?>" <?php checked( isset( $ips_options['custom_layout'] )  && $ips_options['custom_layout'] == $skin ? true : false , true ); ?> /> <label for="ips-custom-layout-<?php echo $skin; ?>"><?php echo $skin; ?></label><br /><img src="<?php echo IPS_URL . '/images/sample_' . $skin . '.jpg' ; ?>" height="100" style="margin-left:5px;" /></p>
+						<p><input type="radio" id="ips-custom-layout-<?php echo $skin; ?>" name="ips[custom_layout]" value="<?php echo esc_attr( $skin) ; ?>" <?php checked( isset( $ips_options['custom_layout'] )  && $ips_options['custom_layout'] === $skin ? true : false , true ); ?> /> <label for="ips-custom-layout-<?php echo esc_attr( $skin ); ?>"><?php echo esc_html( $skin ); ?></label><br /><img src="<?php echo IPS_URL . '/images/sample_' . esc_attr( $skin ) . '.jpg' ; ?>" height="100" style="margin-left:5px;" /></p>
 					<?php endforeach; ?>
 				</td>
 			</tr>
@@ -166,7 +166,7 @@
 				<td><p class="description"><?php esc_html_e( 'The height of the animation in pixels', 'ips' ); ?></p></td>
 			</tr>
 
-			<?php if ( ! isset( $ips_options['new_api_version'] ) || 0 == (int) $ips_options['new_api_version'] ) : ?>
+			<?php if ( ! isset( $ips_options['new_api_version'] ) || 0 === (int) $ips_options['new_api_version'] ) : ?>
 				<tr valign="top" class="field">
 					<th class="label" scope="row"><label><span class="alignleft">layout</span></label><br /></th>
 					<td><p class="description"><?php esc_html_e( 'The layout of the animation. Possible values : "<strong>presentation</strong>" (double page), "<strong>browsing</strong>" (single page)', 'ips' ); ?></p></td>
