@@ -3,8 +3,8 @@ Contributors: benjaminniess, momo360modena, pronamic, remcotolsma
 Donate link: http://beapi.fr/donate
 Tags: Issuu, flipbook, PDF, upload, synchronisation, flash, flip, book
 Requires at least: 3.5
-Tested up to: 4.7
-Stable tag: 3.1.1
+Tested up to: 4.9.5
+Stable tag: 3.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,9 @@ You need to enable the the embed API in the plugin's settings page
 
 
 == Changelog ==
+
+= 3.1.2 =
+* Tested up to 4.9.5
 
 = 3.1.1 =
 * Minor coding standards review
